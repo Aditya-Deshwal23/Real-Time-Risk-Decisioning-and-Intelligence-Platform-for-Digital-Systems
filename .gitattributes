@@ -1,0 +1,25 @@
+* text=auto eol=lf
+
+# Generated source
+**/generated/** linguist-generated=true
+*.pb.java linguist-generated=true
+*.pb.go linguist-generated=true
+*_pb2.py linguist-generated=true
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.otf binary
+*.parquet binary
+*.feather binary
+*.arrow binary
+*.zip binary
+*.gz binary

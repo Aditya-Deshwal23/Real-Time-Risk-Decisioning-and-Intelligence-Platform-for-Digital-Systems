@@ -1,0 +1,79 @@
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+*.jks
+*.keystore
+
+# Editor and operating-system state
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# JVM build output and caches
+.gradle/
+**/build/
+**/out/
+*.class
+hs_err_pid*
+
+# Python build output and caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.venv/
+venv/
+.coverage
+.coverage.*
+htmlcov/
+*.egg-info/
+
+# Node build output and caches
+node_modules/
+.vite/
+.turbo/
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Terraform local state and variables
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+!*.tfvars.example
+!*.tfvars.json.example
+
+# Local data and datasets
+data/
+datasets/
+**/data/
+**/datasets/
+*.csv
+*.tsv
+*.jsonl
+*.ndjson
+*.parquet
+*.feather
+*.arrow
+*.avro
+*.orc
+*.db
+*.sqlite
+*.sqlite3
+*.pkl
+*.joblib
+*.model
+*.onnx
