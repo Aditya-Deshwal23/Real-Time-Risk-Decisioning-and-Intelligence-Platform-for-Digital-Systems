@@ -6,6 +6,8 @@
 
 **First implementation phase:** Phase 4 — Authentication, authorization and tenancy.
 
+The platform README is the ownership boundary for the control plane and decision API.
+
 ## Package boundaries
 
 Platform packages follow `dev.verdict.platform`, as defined by [`architecture.md`](../docs/context/architecture.md). The root package contains the application entry point and published platform API.
