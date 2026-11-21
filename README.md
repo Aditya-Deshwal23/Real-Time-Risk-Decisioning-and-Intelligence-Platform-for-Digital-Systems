@@ -1,6 +1,10 @@
 # VERDICT
 
-VERDICT is a specification-first project for a real-time risk decisioning and intelligence platform using simulated transactions and permitted public data; it never moves money. **Status: specification baseline V1.0, no implementation yet.**
+VERDICT is a specification-first project for a real-time risk decisioning and intelligence platform using simulated transactions and permitted public data; it never moves money. **Status: specification baseline V1.0; JVM build skeleton only, no business implementation yet.**
+
+## JVM build
+
+The JVM projects use the committed Gradle wrapper and Java 25 toolchain. With JDK 25 installed, run `./gradlew clean build` from the repository root to build and test the platform, stream, simulator, and shared JVM libraries.
 
 ## Repository layout
 
