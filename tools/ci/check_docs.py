@@ -2,7 +2,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs"
 
@@ -91,8 +90,73 @@ def check_docs_index() -> list[str]:
     return failures
 
 
+def check_compatibility_matrix(root: Path) -> list[str]:
+    failures: list[str] = []
+    matrix = root / "docs" / "compatibility-matrix.md"
+    if not matrix.is_file():
+        return ["docs/compatibility-matrix.md: missing compatibility matrix"]
+
+    rows = [
+        line
+        for line in matrix.read_text(encoding="utf-8").splitlines()
+        if line.startswith("|") and "|---" not in line
+    ]
+    for line in rows:
+        if line.startswith(("| Ecosystem", "|---")):
+            continue
+        if "https://" not in line and "http://" not in line:
+            failures.append(
+                "docs/compatibility-matrix.md: matrix row has no official source URL"
+            )
+        if "verified " not in line.lower():
+            failures.append(
+                "docs/compatibility-matrix.md: matrix row has no verified date"
+            )
+    return failures
+
+
+def check_docs_index_completeness(root: Path) -> list[str]:
+    index = root / "docs" / "README.md"
+    if not index.is_file():
+        return ["docs/README.md: missing documentation index"]
+
+    failures: list[str] = []
+    existing_markdown = [
+        path.relative_to(root).as_posix()
+        for path in (root / "docs").rglob("*.md")
+        if path.is_file()
+        and "docs/context" not in path.relative_to(root).as_posix()
+        and "node_modules" not in path.parts
+    ]
+    index_text = index.read_text(encoding="utf-8")
+    indexed_links = set(LINK_RE.findall(index_text))
+
+    normalized_targets = set()
+    for target in indexed_links:
+        target = target.strip().split()[0].strip("<>")
+        if target.startswith(("http://", "https://", "#", "mailto:")):
+            continue
+        normalized_targets.add((index.parent / target).resolve())
+
+    for markdown in existing_markdown:
+        path = root / markdown
+        if path.resolve() == index.resolve():
+            continue
+        if path.resolve() not in normalized_targets:
+            failures.append(
+                f"{markdown}: existing documentation file is absent from docs/README.md"
+            )
+
+    return failures
+
+
 def main() -> int:
-    failures = check_docs_index() + check_markdown(DOCS)
+    failures = (
+        check_docs_index()
+        + check_docs_index_completeness(ROOT)
+        + check_compatibility_matrix(ROOT)
+        + check_markdown(DOCS)
+    )
     if failures:
         print("\n".join(failures), file=sys.stderr)
         return 1

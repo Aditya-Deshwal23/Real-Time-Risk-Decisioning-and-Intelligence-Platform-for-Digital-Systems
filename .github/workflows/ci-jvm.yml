@@ -42,7 +42,7 @@ jobs:
           changed=false
           while IFS= read -r file; do
             case "$file" in
-              platform/*|stream/*|simulator/*|libs/*|build-logic/*|gradle/*|build.gradle.kts|settings.gradle.kts|gradlew|gradlew.bat|gradle.properties)
+              platform/*|stream/*|simulator/*|libs/*|build-logic/*|gradle/*|build.gradle.kts|settings.gradle.kts|gradlew|gradlew.bat|gradle.properties|.github/workflows/ci-jvm.yml)
                 changed=true
                 ;;
             esac

@@ -230,6 +230,19 @@ One row per implementation unit, added by the assistant in the same change (AW-4
 | 2026-11-21 | CP-01.4 | React/TypeScript console skeleton and compatibility pin | PR #1 (merged) | npm ci, lint, format check, typecheck, test and build PASSED; negative type/lint checks PASSED | Not applicable for non-P0 console change | Completed | DONE |
 | 2026-11-21 | CP-01.5 A | Repository checks, pre-commit hooks, and compatibility matrix | PR #2 (merged) | 6 script tests PASSED; four direct scripts PASSED; pre-commit run --all-files PASSED in 3.70 seconds | Not applicable for repository tooling | Completed | DONE |
 | 2026-11-21 | CP-01.5 B | Change-aware GitHub Actions workflows and aggregate status | PR #3 (merged); follow-up PR #5 (merged); cleanup PR #7 (merged) | PyYAML parse PASSED; pre-commit run --all-files PASSED; script tests PASSED; docs-only PR #4 aggregate status PASSED with JVM/Python/console builds skipped; platform-only PR #6 aggregate status PASSED with JVM build running | Pending | Demonstration evidence recorded | IN REVIEW |
+| 2026-11-21 | Phase 1 corrective unit | Python CI isolation, docs-index completeness, repository check edge tests, extra tests-directory removal, branch protection | Pending corrective PR | Repository scripts and 8 tests run locally; full ecosystem gates rerun before this row is marked DONE | Pending RV-01 rerun | Owner review pending | IN REVIEW |
+
+## 16.1 Proposed learning matrix — PD-6
+
+| ID | Concept | Repository paths | Interview area |
+|---|---|---|---|
+| PD-6-01 | Reproducible Gradle project graph and convention plugins | `settings.gradle.kts`, `gradle/libs.versions.toml`, `build-logic/` | Gradle, toolchains, dependency locking |
+| PD-6-02 | uv workspace isolation and lockfiles | `pyproject.toml`, `ml/`, `model-service/`, `uv.lock` | Python environments and cross-project boundaries |
+| PD-6-03 | Strict React/TypeScript toolchain | `console/package.json`, `console/tsconfig.json`, `console/eslint.config.mjs` | TypeScript, linting, npm reproducibility |
+| PD-6-04 | Executable repository guards | `tools/ci/`, `.pre-commit-config.yaml` | Standard-library Python and pre-commit |
+| PD-6-05 | Change-aware CI routing | `.github/workflows/ci-jvm.yml`, `.github/workflows/ci-python.yml`, `.github/workflows/ci-console.yml`, `.github/workflows/ci-docs-tools.yml`, `.github/workflows/ci-aggregate.yml` | GitHub Actions detection and status jobs |
+| PD-6-06 | Supply-chain and action pinning | `.github/workflows/`, `docs/compatibility-matrix.md`, lockfiles | SHA pinning and dependency provenance |
+| PD-6-07 | Branch protection and merge governance | GitHub `main` protection settings | Required status checks and protected branches |
 
 ## 17. Change log
 
@@ -297,10 +310,10 @@ Next prompt: None.
 ```text
 NEXT IMPLEMENTATION INSTRUCTION
 Status: IN PROGRESS.
-Prompt: Owner branch-protection configuration after CP-01.5.
-Prerequisites to confirm: PR #2, PR #3 and workflow fix PR #5 are merged; demonstration PR #4 and PR #6 evidence is recorded; cleanup PR #7 is merged.
+Prompt: RV-01 corrective rerun, then CP-02.1 if RV-01 approves.
+Prerequisites to confirm: Phase 1 corrective PR merged; all required status checks pass; main remains protected with the five recorded status names.
 Required status checks: `JVM / status`, `Python / status`, `Console / status`, `Docs and tools / status`, `CI / aggregate status`.
-Approvals still needed: owner configures the required branch-protection checks on `main`.
+Approvals still needed: owner and RV-01 milestone approval.
 ```
 
 Update this file after every meaningful implementation unit (AW-41).
