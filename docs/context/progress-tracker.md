@@ -227,7 +227,8 @@ One row per implementation unit, added by the assistant in the same change (AW-4
 
 | Date | Prompt | Unit | Pull request | Gates | Claude review | Learning check | Status |
 |---|---|---|---|---|---|---|---|
-| 2026-11-21 | CP-01.4 | React/TypeScript console skeleton and compatibility pin | None | npm ci, lint, format check, typecheck, test and build PASSED; negative type/lint checks PASSED | Pending | Pending owner review | IN REVIEW |
+| 2026-11-21 | CP-01.4 | React/TypeScript console skeleton and compatibility pin | PR #1 (merged) | npm ci, lint, format check, typecheck, test and build PASSED; negative type/lint checks PASSED | Not applicable for non-P0 console change | Completed | DONE |
+| 2026-11-21 | CP-01.5 A | Repository checks, pre-commit hooks, and compatibility matrix | Pending | 6 script tests PASSED; four direct scripts PASSED; pre-commit run --all-files PASSED in 3.70 seconds | Pending | Pending owner review | IN REVIEW |
 
 ## 17. Change log
 
@@ -274,6 +275,16 @@ Next prompt: CP-01.5 after review.
 ```
 
 ```text
+HANDOFF 2026-11-21 ci/cp-01-5-repo-checks
+Done: CP-01.5 PR A repository scripts, tests, pre-commit hooks, secret baseline, docs and compatibility matrix.
+In progress: PR A owner review; PR B workflows remain.
+Uncommitted: Files on ci/cp-01-5-repo-checks; PR A not pushed yet.
+Resume with: push PR A, open a pull request, then create ci/cp-01-5-workflows for PR B.
+Approvals awaited: Owner review and merge of PR A before workflows are validated.
+Next prompt: CP-01.5 PR B.
+```
+
+```text
 HANDOFF 2026-11-14, no repository
 Done: code-standards.md and ui-context.md delivered, with a correction note for the form and icon libraries.
 In progress: ai-workflow-rules.md.
@@ -285,9 +296,9 @@ Next prompt: None.
 ```text
 NEXT IMPLEMENTATION INSTRUCTION
 Status: IN PROGRESS.
-Prompt: CP-01.4, Phase 1, milestone P01 — console skeleton.
-Prerequisites to confirm: approved TypeScript/ESLint compatibility pin recorded in the active context and compatibility matrix; feature branch `feature/console-skeleton`.
-Approvals still needed: none for implementation; owner review before commit or merge.
+Prompt: CP-01.5 PR B, Phase 1, milestone P01 — change-aware repository workflows.
+Prerequisites to confirm: CP-01.5 PR A merged; repository checks and pre-commit hooks pass.
+Approvals still needed: owner merges PR A before PR B implementation starts.
 ```
 
 Update this file after every meaningful implementation unit (AW-41).
