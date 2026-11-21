@@ -1,0 +1,86 @@
+name: CI - Python
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-python-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: Python / detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.paths.outputs.changed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - id: paths
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          base="$BASE_SHA"
+          head="$HEAD_SHA"
+          git fetch --no-tags origin "$base" "$head" 2>/dev/null || true
+          if git rev-parse "${base}^{commit}" >/dev/null 2>&1 && git rev-parse "${head}^{commit}" >/dev/null 2>&1; then
+            files="$(git diff --name-only "$base" "$head")"
+          else
+            files="$(git diff --name-only HEAD^ HEAD)"
+          fi
+          changed=false
+          while IFS= read -r file; do
+            case "$file" in
+              ml/*|model-service/*|pyproject.toml|uv.lock|.python-version)
+                changed=true
+                ;;
+            esac
+          done <<< "$files"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  test:
+    name: Python / uv lint and tests
+    needs: detect
+    if: needs.detect.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+        with:
+          python-version: "3.13"
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          version: "0.13.9"
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+      - run: uv sync --locked
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy ml/src model-service/src
+      - run: uv run pytest ml/tests model-service/tests -m "not slow"
+
+  status:
+    name: Python / status
+    needs:
+      - detect
+      - test
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - if: ${{ needs.detect.outputs.changed == 'true' && needs.test.result != 'success' }}
+        run: exit 1

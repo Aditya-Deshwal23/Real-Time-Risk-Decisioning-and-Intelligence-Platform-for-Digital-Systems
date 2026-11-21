@@ -1,0 +1,80 @@
+name: CI - JVM
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+  workflow_call:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-jvm-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  detect:
+    name: JVM / detect changes
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    outputs:
+      changed: ${{ steps.paths.outputs.changed }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+      - id: paths
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          base="$BASE_SHA"
+          head="$HEAD_SHA"
+          git fetch --no-tags origin "$base" "$head" 2>/dev/null || true
+          if git rev-parse "${base}^{commit}" >/dev/null 2>&1 && git rev-parse "${head}^{commit}" >/dev/null 2>&1; then
+            files="$(git diff --name-only "$base" "$head")"
+          else
+            files="$(git diff --name-only HEAD^ HEAD)"
+          fi
+          changed=false
+          while IFS= read -r file; do
+            case "$file" in
+              platform/*|stream/*|simulator/*|libs/*|build-logic/*|gradle/*|build.gradle.kts|settings.gradle.kts|gradlew|gradlew.bat|gradle.properties)
+                changed=true
+                ;;
+            esac
+          done <<< "$files"
+          echo "changed=$changed" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: JVM / Gradle build
+    needs: detect
+    if: needs.detect.outputs.changed == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-java@d1374f8ac74474200d16ef8ecee22c7ae7a51880 # v6.3.0
+        with:
+          distribution: temurin
+          java-version: "25"
+          cache: gradle
+      - uses: gradle/actions/setup-gradle@7296c772c13d12d9871528814b51fb2143c138ef # v6.4.1
+      - run: ./gradlew spotlessCheck check
+
+  status:
+    name: JVM / status
+    needs:
+      - detect
+      - build
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - if: ${{ needs.detect.outputs.changed == 'true' && needs.build.result != 'success' }}
+        run: exit 1
