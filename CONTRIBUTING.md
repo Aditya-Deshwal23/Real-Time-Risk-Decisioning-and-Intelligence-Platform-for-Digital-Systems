@@ -22,3 +22,13 @@ python3 tools/ci/check_size.py
 python3 tools/ci/check_notebooks.py
 python3 tools/ci/check_context_refs.py
 ```
+
+## GitHub Actions
+
+Pull requests run change-aware workflows for JVM, Python, console, and docs/tools areas. Skipped areas do not leave required checks pending. The exact branch-protection status checks are:
+
+- `JVM / status`
+- `Python / status`
+- `Console / status`
+- `Docs and tools / status`
+- `CI / aggregate status`

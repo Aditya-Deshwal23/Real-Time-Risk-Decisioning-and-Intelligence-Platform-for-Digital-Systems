@@ -18,6 +18,7 @@
 | [`context/progress-tracker.md`](context/progress-tracker.md) | Project state and phase tracker | Phase 0 — Product specification and architecture lock | current |
 | [`adr/README.md`](adr/README.md) | Architecture decision record index and numbering | Phase 1 — Empty repository to professional monorepo | current |
 | [`adr/ADR-TEMPLATE.md`](adr/ADR-TEMPLATE.md) | Template for new architecture decisions | Phase 1 — Empty repository to professional monorepo | current |
+| [`.github/workflows/`](../.github/workflows/) | Change-aware CI workflows and aggregate status | Phase 1 — Empty repository to professional monorepo | current |
 | `claims-ledger.md` | Evidence-backed public claims | Phase 1 — Empty repository to professional monorepo | draft |
 | [`compatibility-matrix.md`](compatibility-matrix.md) | Registry-verified dependency and tool versions | Phase 1 — Empty repository to professional monorepo | current |
 | `data-sources.md` | Dataset provenance, licence and use restrictions | Phase 9 — Python data engineering and ML pipelines | planned |

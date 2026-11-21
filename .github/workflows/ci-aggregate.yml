@@ -1,0 +1,39 @@
+name: CI - Aggregate
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-aggregate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  jvm:
+    uses: ./.github/workflows/ci-jvm.yml
+  python:
+    uses: ./.github/workflows/ci-python.yml
+  console:
+    uses: ./.github/workflows/ci-console.yml
+  docs-tools:
+    uses: ./.github/workflows/ci-docs-tools.yml
+
+  status:
+    name: CI / aggregate status
+    needs:
+      - jvm
+      - python
+      - console
+      - docs-tools
+    if: always()
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - if: ${{ contains(needs.*.result, 'failure') || contains(needs.*.result, 'cancelled') }}
+        run: exit 1
