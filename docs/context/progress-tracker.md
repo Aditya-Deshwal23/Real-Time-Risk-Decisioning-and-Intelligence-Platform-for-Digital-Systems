@@ -229,7 +229,7 @@ One row per implementation unit, added by the assistant in the same change (AW-4
 |---|---|---|---|---|---|---|---|
 | 2026-11-21 | CP-01.4 | React/TypeScript console skeleton and compatibility pin | PR #1 (merged) | npm ci, lint, format check, typecheck, test and build PASSED; negative type/lint checks PASSED | Not applicable for non-P0 console change | Completed | DONE |
 | 2026-11-21 | CP-01.5 A | Repository checks, pre-commit hooks, and compatibility matrix | PR #2 (merged) | 6 script tests PASSED; four direct scripts PASSED; pre-commit run --all-files PASSED in 3.70 seconds | Not applicable for repository tooling | Completed | DONE |
-| 2026-11-21 | CP-01.5 B | Change-aware GitHub Actions workflows and aggregate status | PR A merged; PR B pending | PyYAML parse PASSED; pre-commit run --all-files PASSED; script tests PASSED | Pending | Pending workflow review | IN REVIEW |
+| 2026-11-21 | CP-01.5 B | Change-aware GitHub Actions workflows and aggregate status | PR #3 (merged); follow-up PR #5 (merged); cleanup PR #7 (merged) | PyYAML parse PASSED; pre-commit run --all-files PASSED; script tests PASSED; docs-only PR #4 aggregate status PASSED with JVM/Python/console builds skipped; platform-only PR #6 aggregate status PASSED with JVM build running | Pending | Demonstration evidence recorded | IN REVIEW |
 
 ## 17. Change log
 
@@ -297,9 +297,10 @@ Next prompt: None.
 ```text
 NEXT IMPLEMENTATION INSTRUCTION
 Status: IN PROGRESS.
-Prompt: CP-01.5 PR B, Phase 1, milestone P01 — change-aware repository workflows.
-Prerequisites to confirm: CP-01.5 PR A merged on `main`; PR B workflow YAML and repository checks pass.
-Approvals still needed: owner review and merge of PR B; owner configures branch-protection checks after demonstrations.
+Prompt: Owner branch-protection configuration after CP-01.5.
+Prerequisites to confirm: PR #2, PR #3 and workflow fix PR #5 are merged; demonstration PR #4 and PR #6 evidence is recorded; cleanup PR #7 is merged.
+Required status checks: `JVM / status`, `Python / status`, `Console / status`, `Docs and tools / status`, `CI / aggregate status`.
+Approvals still needed: owner configures the required branch-protection checks on `main`.
 ```
 
 Update this file after every meaningful implementation unit (AW-41).
