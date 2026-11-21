@@ -2,7 +2,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 CONTEXT_REF_RE = re.compile(r"docs/context/[A-Za-z0-9._/-]+")
 

@@ -1,7 +1,6 @@
 import re
-from pathlib import Path
 import sys
-
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ARCHITECTURE = ROOT / "docs/context/architecture.md"

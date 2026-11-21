@@ -2,7 +2,6 @@ import re
 import sys
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parents[2]
 DOCS = ROOT / "docs"
 
@@ -103,7 +102,7 @@ def check_compatibility_matrix(root: Path) -> list[str]:
         if line.startswith("|") and "|---" not in line
     ]
     for line in rows:
-        if line.startswith("| Ecosystem") or line.startswith("|---"):
+        if line.startswith(("| Ecosystem", "|---")):
             continue
         if "https://" not in line and "http://" not in line:
             failures.append(
