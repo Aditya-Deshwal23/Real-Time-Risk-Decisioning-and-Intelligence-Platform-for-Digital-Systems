@@ -1,7 +1,32 @@
 # Compatibility Matrix
 
+**Last reviewed:** 2026-11-21
+
 | Ecosystem | Package or tool | Version | Verification source | Compatibility notes | Status |
 |---|---|---|---|---|---|
+| JVM | OpenJDK / Java toolchain | 25 | [OpenJDK 25](https://openjdk.org/projects/jdk/25/), verified 2026-11-21 | Gradle toolchain in `build-logic` | verified |
+| JVM | Gradle | 9.6.0 | [Gradle 9.6.0 release](https://gradle.org/releases/), verified 2026-11-21 | Wrapper distribution SHA-256 in `gradle/wrapper/gradle-wrapper.properties` | verified |
+| JVM | Spring Boot | 4.1.3 | [Gradle Plugin Portal: Spring Boot](https://plugins.gradle.org/plugin/org.springframework.boot), verified 2026-11-21 | Gradle plugin and dependency BOM | verified |
+| JVM | Spotless | 8.12.0 | [Gradle Plugin Portal: Spotless](https://plugins.gradle.org/plugin/com.diffplug.spotless), verified 2026-11-21 | Google Java Format integration | verified |
+| JVM | google-java-format | 2.0.0 | [Maven Central: google-java-format](https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format/2.0.0), verified 2026-11-21 | Formatting engine | verified |
+| JVM | SpotBugs plugin / engine | 6.5.13 / 4.10.5 | [Gradle Plugin Portal: SpotBugs](https://plugins.gradle.org/plugin/com.github.spotbugs), [Maven Central: SpotBugs 4.10.5](https://central.sonatype.com/artifact/com.github.spotbugs/spotbugs/4.10.5), verified 2026-11-21 | Static-analysis plugin and engine | verified |
+| JVM | Error Prone plugin / core | 5.2.0 / 2.53.0 | [Gradle Plugin Portal: Error Prone](https://plugins.gradle.org/plugin/net.ltgt.errorprone), [Maven Central: error_prone_core 2.53.0](https://central.sonatype.com/artifact/com.google.errorprone/error_prone_core/2.53.0), verified 2026-11-21 | Compile-time static analysis | verified |
+| JVM | NullAway | 0.14.4 | [Maven Central: NullAway 0.14.4](https://central.sonatype.com/artifact/com.uber.nullaway/nullaway/0.14.4), verified 2026-11-21 | Nullability analysis | verified |
+| JVM | JSpecify | 1.0.1 | [Maven Central: JSpecify 1.0.1](https://central.sonatype.com/artifact/org.jspecify/jspecify/1.0.1), verified 2026-11-21 | Nullability annotations | verified |
+| JVM | Checkstyle | 14.4.0 | [Maven Central: Checkstyle 14.4.0](https://central.sonatype.com/artifact/com.puppycrawl.tools/checkstyle/14.4.0), verified 2026-11-21 | Style and complexity checks | verified |
+| JVM | Forbidden APIs | 3.11 | [Gradle Plugin Portal: Forbidden APIs](https://plugins.gradle.org/plugin/de.thetaphi.forbiddenapis), verified 2026-11-21 | Forbidden API signatures | verified |
+| JVM | JUnit Jupiter | 6.0.2 | [Maven Central: JUnit Jupiter 6.0.2](https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter/6.0.2), verified 2026-11-21 | JVM test platform | verified |
+| JVM | ArchUnit | 1.5.1 | [Maven Central: ArchUnit JUnit 5 1.5.1](https://central.sonatype.com/artifact/com.tngtech.archunit/archunit-junit5/1.5.1), verified 2026-11-21 | Module and dependency boundary tests | verified |
+| Python | Python | 3.13 | [Python 3.13 release](https://www.python.org/downloads/release/python-3130/), verified 2026-11-21 | Workspace pin in `.python-version`; uv-managed interpreter | verified |
+| Python | uv | 0.13.9 | [uv 0.13.9 release](https://github.com/astral-sh/uv/releases/tag/0.13.9), verified 2026-11-21 | One committed workspace lockfile | verified |
+| Python | Ruff | 0.17.6 | [PyPI: Ruff 0.17.6](https://pypi.org/project/ruff/0.17.6/), verified 2026-11-21 | Lint and format | verified |
+| Python | mypy | 2.4.1 | [PyPI: mypy 2.4.1](https://pypi.org/project/mypy/2.4.1/), verified 2026-11-21 | Strict type check | verified |
+| Python | pytest | 9.2.0 | [PyPI: pytest 9.2.0](https://pypi.org/project/pytest/9.2.0/), verified 2026-11-21 | Test runner | verified |
+| Python | Hypothesis | 6.170.17 | [PyPI: Hypothesis 6.170.17](https://pypi.org/project/hypothesis/6.170.17/), verified 2026-11-21 | Property test dependency | verified |
+| Python | Hatchling | 1.33.0 | [PyPI: Hatchling 1.33.0](https://pypi.org/project/hatchling/1.33.0/), verified 2026-11-21 | Python build backend | verified |
+| Repository | pre-commit | 4.7.0 | [PyPI: pre-commit 4.7.0](https://pypi.org/project/pre-commit/4.7.0/), verified 2026-11-21 | Pre-commit hook framework | verified |
+| Repository | detect-secrets | 1.5.0 | [PyPI: detect-secrets 1.5.0](https://pypi.org/project/detect-secrets/1.5.0/), verified 2026-11-21 | Local staged-file secret scanning | verified |
+| Repository | pre-commit-hooks | 6.0.0 | [GitHub release: pre-commit-hooks v6.0.0](https://github.com/pre-commit/pre-commit-hooks/releases/tag/v6.0.0), verified 2026-11-21 | File hygiene hooks | verified |
 | Web | Node.js | 26.13.0 | [Node.js v26.13.0 release](https://nodejs.org/en/blog/release/v26.13.0), verified 2026-11-21 | Installed version; satisfies Vite, Vitest, jsdom and ESLint engine ranges | verified |
 | Web | npm | 11.20.0 | `npm --version`, official npm CLI release metadata, verified 2026-11-21 | Lockfile generated with npm; frozen installs use `npm ci` | verified |
 | Web | React / React DOM | 19.3.1 | [npm React 19.3.1](https://www.npmjs.com/package/react/v/19.3.1), [npm React DOM 19.3.1](https://www.npmjs.com/package/react-dom/v/19.3.1), verified 2026-11-21 | React DOM peer requires React `^19.3.1` | verified |

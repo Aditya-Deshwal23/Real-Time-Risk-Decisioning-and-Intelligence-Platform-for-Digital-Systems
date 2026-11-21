@@ -26,7 +26,9 @@ def main() -> int:
         missing = sorted(expected_packages - actual_packages)
         unexpected = sorted(actual_packages - expected_packages)
         print(f"Missing package-info.java directories: {missing}", file=sys.stderr)
-        print(f"Unexpected package-info.java directories: {unexpected}", file=sys.stderr)
+        print(
+            f"Unexpected package-info.java directories: {unexpected}", file=sys.stderr
+        )
         return 1
 
     print(f"Platform packages match architecture.md: {sorted(actual_packages)}")

@@ -14,6 +14,16 @@ The Python workspace uses uv with Python 3.13 and one committed `uv.lock`. Run `
 
 The React and TypeScript console toolchain is in `console/`. With the pinned Node and npm versions, run `npm ci` there, followed by `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm run test`, or `npm run build`.
 
+## Repository checks
+
+Pre-commit runs file hygiene, secret scanning, documentation and artifact checks, plus the JVM, Python and console format checks. Install and run it from the repository root:
+
+```text
+uv sync --locked
+uv run pre-commit install
+uv run pre-commit run --all-files
+```
+
 ## Repository layout
 
 | Path | Responsibility |

@@ -19,7 +19,7 @@
 | [`adr/README.md`](adr/README.md) | Architecture decision record index and numbering | Phase 1 — Empty repository to professional monorepo | current |
 | [`adr/ADR-TEMPLATE.md`](adr/ADR-TEMPLATE.md) | Template for new architecture decisions | Phase 1 — Empty repository to professional monorepo | current |
 | `claims-ledger.md` | Evidence-backed public claims | Phase 1 — Empty repository to professional monorepo | draft |
-| `compatibility-matrix.md` | Registry-verified dependency and tool versions | Phase 1 — Empty repository to professional monorepo | draft |
+| [`compatibility-matrix.md`](compatibility-matrix.md) | Registry-verified dependency and tool versions | Phase 1 — Empty repository to professional monorepo | current |
 | `data-sources.md` | Dataset provenance, licence and use restrictions | Phase 9 — Python data engineering and ML pipelines | planned |
 | `cost-model.md` | Infrastructure cost assumptions and evidence | Phase 20 — AWS and Terraform | planned |
 | `slo.md` | Service-level indicators and hypothesis targets | Phase 18 — Observability and operations | planned |

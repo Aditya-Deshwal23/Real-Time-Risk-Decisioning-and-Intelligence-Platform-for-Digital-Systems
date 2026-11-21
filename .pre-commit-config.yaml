@@ -1,0 +1,55 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=10240"]
+      - id: check-yaml
+      - id: check-toml
+      - id: check-json
+
+  - repo: local
+    hooks:
+      - id: detect-secrets
+        name: detect secrets
+        entry: uv run detect-secrets-hook --baseline .secrets.baseline
+        language: system
+        pass_filenames: true
+      - id: check-docs
+        name: check documentation
+        entry: python3 tools/ci/check_docs.py
+        language: system
+        pass_filenames: false
+      - id: check-size
+        name: check repository size
+        entry: python3 tools/ci/check_size.py
+        language: system
+        pass_filenames: false
+      - id: check-notebooks
+        name: check notebooks
+        entry: python3 tools/ci/check_notebooks.py
+        language: system
+        pass_filenames: false
+      - id: check-context-refs
+        name: check context pointer references
+        entry: python3 tools/ci/check_context_refs.py
+        language: system
+        pass_filenames: false
+      - id: jvm-format
+        name: JVM Spotless check
+        entry: ./gradlew spotlessCheck
+        language: system
+        pass_filenames: false
+      - id: python-format
+        name: Python Ruff format check
+        entry: uv run ruff format --check .
+        language: system
+        pass_filenames: false
+      - id: console-format
+        name: Console format check
+        entry: npm --prefix console run format:check
+        language: system
+        pass_filenames: false
