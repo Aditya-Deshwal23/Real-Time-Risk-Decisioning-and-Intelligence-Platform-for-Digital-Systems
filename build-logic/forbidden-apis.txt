@@ -1,0 +1,20 @@
+@defaultMessage Use an injected clock, identifier provider, or bounded process abstraction.
+java.time.Instant#now()
+java.lang.System#currentTimeMillis()
+java.time.LocalDateTime#now()
+java.util.Date::new
+java.util.UUID#randomUUID()
+java.lang.Math#random()
+java.util.Random::new
+java.lang.Throwable#printStackTrace()
+java.lang.Thread#sleep(long)
+java.lang.Thread#sleep(long,int)
+java.lang.ProcessBuilder::new
+java.lang.Runtime#exec(java.lang.String)
+java.lang.Runtime#exec(java.lang.String,java.lang.String[])
+java.lang.Runtime#exec(java.lang.String,java.lang.String[],java.io.File)
+java.lang.Runtime#exec(java.lang.String[])
+java.lang.Runtime#exec(java.lang.String[],java.lang.String[])
+java.lang.Runtime#exec(java.lang.String[],java.lang.String[],java.io.File)
+java.io.ObjectInputStream
+java.io.ObjectOutputStream

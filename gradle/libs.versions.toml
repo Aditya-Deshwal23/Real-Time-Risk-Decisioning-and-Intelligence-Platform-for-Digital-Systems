@@ -1,0 +1,45 @@
+[versions]
+# Java toolchain; official OpenJDK release information, verified 2026-11-21.
+java = "25"
+# Gradle 9.6.0; https://gradle.org/releases/, verified 2026-11-21.
+gradle = "9.6.0"
+# Spring Boot 4.1.3; https://plugins.gradle.org/plugin/org.springframework.boot, verified 2026-11-21.
+spring-boot = "4.1.3"
+# Spotless 8.12.0; https://plugins.gradle.org/plugin/com.diffplug.spotless, verified 2026-11-21.
+spotless = "8.12.0"
+# google-java-format 2.0.0; https://central.sonatype.com/artifact/com.google.googlejavaformat/google-java-format, verified 2026-11-21.
+google-java-format = "2.0.0"
+# SpotBugs Gradle plugin 6.5.13; https://plugins.gradle.org/plugin/com.github.spotbugs, verified 2026-11-21.
+spotbugsPlugin = "6.5.13"
+# SpotBugs engine 4.10.5; https://central.sonatype.com/artifact/com.github.spotbugs/spotbugs, verified 2026-11-21.
+spotbugs = "4.10.5"
+# Error Prone Gradle plugin 5.2.0; https://plugins.gradle.org/plugin/net.ltgt.errorprone, verified 2026-11-21.
+errorpronePlugin = "5.2.0"
+# Error Prone core 2.53.0; https://central.sonatype.com/artifact/com.google.errorprone/error_prone_core, verified 2026-11-21.
+errorprone = "2.53.0"
+# NullAway 0.14.4; https://central.sonatype.com/artifact/com.uber.nullaway/nullaway, verified 2026-11-21.
+nullaway = "0.14.4"
+# JSpecify 1.0.1; https://central.sonatype.com/artifact/org.jspecify/jspecify, verified 2026-11-21.
+jspecify = "1.0.1"
+# Checkstyle 14.4.0; https://central.sonatype.com/artifact/com.puppycrawl.tools/checkstyle, verified 2026-11-21.
+checkstyle = "14.4.0"
+# Forbidden APIs plugin 3.11; https://plugins.gradle.org/plugin/de.thetaphi.forbiddenapis, verified 2026-11-21.
+forbiddenApis = "3.11"
+# JUnit Jupiter 6.0.2; https://central.sonatype.com/artifact/org.junit.jupiter/junit-jupiter, verified 2026-11-21.
+junit = "6.0.2"
+# ArchUnit 1.5.1; https://central.sonatype.com/artifact/com.tngtech.archunit/archunit-junit5, verified 2026-11-21.
+archunit = "1.5.1"
+
+[libraries]
+jspecify = { module = "org.jspecify:jspecify", version.ref = "jspecify" }
+junit = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junit" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junit" }
+archunit = { module = "com.tngtech.archunit:archunit-junit5", version.ref = "archunit" }
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
+spring-boot-webmvc = { module = "org.springframework.boot:spring-boot-starter-webmvc" }
+spring-boot-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
