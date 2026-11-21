@@ -17,11 +17,11 @@
 
 | Field | Value |
 |---|---|
-| Phase | 0, Product specification and architecture lock. In this project: **Specification and Architecture Baseline** |
-| Status | IN PROGRESS. Drafts of the six files are delivered; the owner review and the approval gate are pending |
-| Objective | Freeze spec baseline V1.0 (the P0 and P1 scope, the architecture, the coding standards, the UI specification and the workflow rules) so that implementation starts without re-opening scope |
-| Implementation | **No implementation has started.** No repository exists yet; it is created in Phase 1 |
-| Exit criteria | (1) The owner has reviewed the six files and the findings of the cross-file review are closed. (2) The repository structure (Part H), the 30-week roadmap (Part I), the prompt library (Part J), the Student Pack matrix (Part K), the risk register and quality audit (Part L) and the approval gate (Part M) are delivered. (3) The blocking questions in Part M are answered. (4) The owner states approval of V1.0 in a session and the approval is entered in the change log (section 17) |
+| Phase | 1, Repository foundation and toolchains; roadmap Week 1–2, milestone P01 |
+| Status | IN PROGRESS. Repository skeleton, JVM build and Python workspace are present; CP-01.4 console skeleton is underway |
+| Objective | Establish reproducible repository and ecosystem foundations before feature implementation |
+| Implementation | Repository documentation, JVM and Python skeletons are present. No decisioning business implementation has started |
+| Exit criteria | Complete the Phase 1 tasks T-012 through T-016 in section 7 and pass the owner review gate; each task's checks and state are recorded here |
 | Schedule | Roadmap Week 1 starts on Monday 2026-11-16. The roadmap is the only place that maps phases to weeks |
 
 ## 3. Phase map
@@ -148,7 +148,7 @@ These ten are tracked here. Part L holds the full register with likelihood and i
 | R-01 | Twenty-four phases are too much for one developer in 30 weeks | P0 and P1 freeze; an early vertical slice; critical path and optional work marked in the roadmap; Extended items are cut first | Part I, AW-20 | OPEN |
 | R-02 | Coursework reduces the weekly hours | Lighter weeks in the roadmap, small weekly demos, buffer weeks | Part I | OPEN |
 | R-03 | The local stack is too heavy for the development laptop | Compose profiles, a single-node Kafka, memory measured in Phase 2 | Phase 2 | OPEN |
-| R-04 | Copilot invents APIs or relies on stale knowledge of recent majors (TypeScript 7, Vite 8, Vitest 5, ESLint 10, TanStack Table 9, MSW 3, Zod 4) | AW-09 to AW-12, AW-51, CS-T-02, CS-X-01, owner review | `ai-workflow-rules.md` | OPEN |
+| R-04 | Copilot invents APIs or relies on stale knowledge of recent majors (TypeScript 6, Vite 8, Vitest 5, ESLint 9, TanStack Table 9, MSW 3, Zod 4) | AW-09 to AW-12, AW-51, CS-T-02, CS-X-01, owner review | `ai-workflow-rules.md` | OPEN |
 | R-05 | Some versions could not be verified during research | The compatibility matrix is completed in Phase 1 from real registry queries (AW-21) | Phase 1 | OPEN |
 | R-06 | Online and offline feature definitions drift apart | One feature spec, golden fixtures and a CI parity gate (invariant 10) | Phase 8 | OPEN |
 | R-07 | Event-time windows, grace periods and late data in Kafka Streams are hard to get right | An early spike in the vertical slice, only the two bucket sizes in the spec, replay tests | Phase 7 | OPEN |
@@ -184,15 +184,15 @@ Some checks were run in the research workspace during Phase 0. They are not repo
 
 | Item | State |
 |---|---|
-| Repository | Not created |
-| Local clone and branch | None |
-| Commits | 0 |
-| Last merged milestone | None |
-| `main` protection | Not configured |
+| Repository | VERDICT monorepo; JVM and Python skeletons present |
+| Local clone and branch | Local clone; `feature/console-skeleton` |
+| Commits | Existing main baseline at `62e7b53`; current console work is uncommitted |
+| Last merged milestone | CP-01.3 baseline on `main`; CP-01.4 in progress |
+| `main` protection | UNVERIFIED in this session |
 | GitHub Actions | None |
-| Local environment | Not set up |
+| Local environment | Node v26.13.0, npm 11.20.0; Java and Python toolchains were set up in prior milestones |
 | Cloud | No AWS account in use (planned for Week 9) |
-| Build | Not applicable |
+| Build | Gradle and uv workspaces present; console toolchain in progress |
 
 ## 15. Standards gaps
 
@@ -227,7 +227,7 @@ One row per implementation unit, added by the assistant in the same change (AW-4
 
 | Date | Prompt | Unit | Pull request | Gates | Claude review | Learning check | Status |
 |---|---|---|---|---|---|---|---|
-| None yet | | | | | | | |
+| 2026-11-21 | CP-01.4 | React/TypeScript console skeleton and compatibility pin | None | npm ci, lint, format check, typecheck, test and build PASSED; negative type/lint checks PASSED | Pending | Pending owner review | IN REVIEW |
 
 ## 17. Change log
 
@@ -235,6 +235,7 @@ Spec baseline changes, corrections, change requests and rule changes (AW-55, AW-
 
 | Date | Change | Type | Approved by |
 |---|---|---|---|
+| 2026-11-21 | PD-1: pin TypeScript 6.0.3 and ESLint 9.39.5 to preserve required type-aware and jsx-a11y linting; document jsdom as test-only tooling | Approved compatibility decision | Owner |
 | 2026-11-13 | `code-standards.md`: form library and icon library line corrected (note in the first part of `ui-context.md`) | Correction | Pending the approval gate |
 | 2026-11-15 | `ai-workflow-rules.md` part 1: `FR-` identifiers replaced by feature and acceptance-criteria IDs | Correction | Pending the approval gate |
 | 2026-11-15 | `progress-tracker.md` part 1: reference in D-10 corrected | Correction | Pending the approval gate |
@@ -263,6 +264,16 @@ Next prompt: None until approval, then CP-01.1.
 ```
 
 ```text
+HANDOFF 2026-11-21 feature/console-skeleton
+Done: CP-01.4 console skeleton, pinned npm toolchain, compatibility matrix, and docs updates.
+In progress: Owner review; no commit or push made.
+Uncommitted: Console source/configuration, package-lock.json, docs and root documentation changes.
+Resume with: cd console && npm ci && npm run lint && npm run format:check && npm run typecheck && npm run test && npm run build
+Approvals awaited: Owner review and explicit commit/push authorization.
+Next prompt: CP-01.5 after review.
+```
+
+```text
 HANDOFF 2026-11-14, no repository
 Done: code-standards.md and ui-context.md delivered, with a correction note for the form and icon libraries.
 In progress: ai-workflow-rules.md.
@@ -273,10 +284,10 @@ Next prompt: None.
 
 ```text
 NEXT IMPLEMENTATION INSTRUCTION
-Status: none. No implementation starts before the owner approves spec baseline V1.0 (B-01).
-After approval: CP-01.1, Phase 1, milestone "Repository skeleton and root documentation".
-Prerequisites to confirm before starting: an empty local repository created by the owner (T-011); the approved six files, ready to copy into docs/context/; Git installed.
-Approvals still needed: approval of V1.0; answers to the Part M questions.
+Status: IN PROGRESS.
+Prompt: CP-01.4, Phase 1, milestone P01 — console skeleton.
+Prerequisites to confirm: approved TypeScript/ESLint compatibility pin recorded in the active context and compatibility matrix; feature branch `feature/console-skeleton`.
+Approvals still needed: none for implementation; owner review before commit or merge.
 ```
 
 Update this file after every meaningful implementation unit (AW-41).

@@ -25,7 +25,7 @@ Pins are resolved at scaffold time (rule R-DEP in `ai-workflow-rules.md`). Versi
 |---|---|---|---|
 | Backend language | Java | 25 LTS | All JVM services |
 | ML language | Python | 3.13 (verified as the highest minor supported by every core ML dependency) | `model-service`, `ml` |
-| Frontend language | TypeScript, strict mode | latest is 7.0.x; pin the newest version that satisfies all peer ranges | `console` |
+| Frontend language | TypeScript, strict mode | 6.0.3; selected on 2026-11-21 as the newest release compatible with the required type-aware lint tooling | `console` |
 | Control plane | Spring Boot: Spring MVC, Spring Security, Spring Data JPA, JDBC, Flyway, Actuator, Spring Session JDBC | 4.1.x | `platform` APIs, domain, rules, governance |
 | Resilience | Resilience4j | verify Boot 4 compatibility at scaffold | Circuit breaker, bulkhead, time limiter on model and Redis calls |
 | Event backbone | Apache Kafka, KRaft mode | broker 4.4.0; client library = Boot-managed | Events and stream processing |
@@ -50,7 +50,7 @@ Pins are resolved at scaffold time (rule R-DEP in `ai-workflow-rules.md`). Versi
 | Forms | React Hook Form, Zod | 7.92.x, 4.6.x (verified) | Forms and shared validation |
 | UI | Tailwind CSS v4 with CSS-variable tokens, Radix UI primitives, own component layer | 4.3.x, 1.8.x (verified) | Accessible primitives, our own components |
 | Charts and icons | Apache ECharts, Lucide | 6.1.x, 1.72.x (verified) | Data visualization, icons |
-| Frontend quality | Storybook, Vitest, Testing Library, Playwright, axe-core, MSW, openapi-typescript, openapi-fetch, ESLint, Prettier | 10.6.x, 5.1.x, 16.3.x, 1.65.x, 4.14.x, 3.0.x, 7.13.x, 0.17.x, 10.14.x, 3.10.x (verified) | Component docs, tests, typed API client |
+| Frontend quality | Storybook, Vitest, Testing Library, Playwright, axe-core, MSW, openapi-typescript, openapi-fetch, ESLint, typescript-eslint, react-hooks, jsx-a11y, Prettier | 10.6.x, 5.1.x, 16.3.x, 1.65.x, 4.14.x, 3.0.x, 7.13.x, 0.17.x, ESLint 9.39.5 with typescript-eslint 8.73.0 and jsx-a11y 6.10.2, 3.10.x (verified 2026-11-21) | Component docs, tests, typed API client |
 | Java quality | JUnit 5, AssertJ, Mockito, Testcontainers, ArchUnit, Awaitility, Spotless, JaCoCo | Boot-managed where possible | Tests, module-boundary checks, formatting |
 | System testing | k6, Toxiproxy | resolve at scaffold | Load tests, fault injection |
 | Observability | OpenTelemetry, Micrometer, Prometheus, Grafana, Tempo (local); CloudWatch (AWS) | resolve at scaffold | Metrics, traces, logs, dashboards |

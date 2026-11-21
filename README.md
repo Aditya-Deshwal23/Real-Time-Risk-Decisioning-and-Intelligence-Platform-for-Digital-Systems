@@ -1,6 +1,6 @@
 # VERDICT
 
-VERDICT is a specification-first project for a real-time risk decisioning and intelligence platform using simulated transactions and permitted public data; it never moves money. **Status: specification baseline V1.0; JVM build skeleton only, no business implementation yet.**
+VERDICT is a specification-first project for a real-time risk decisioning and intelligence platform using simulated transactions and permitted public data; it never moves money. **Status: specification baseline V1.0; repository, JVM and Python toolchain skeletons are present, with no business implementation yet.**
 
 ## JVM build
 
@@ -9,6 +9,10 @@ The JVM projects use the committed Gradle wrapper and Java 25 toolchain. With JD
 ## Python workspace
 
 The Python workspace uses uv with Python 3.13 and one committed `uv.lock`. Run `uv sync --locked` from the repository root, then use the project READMEs for lint, format, type-check, and test commands.
+
+## Console
+
+The React and TypeScript console toolchain is in `console/`. With the pinned Node and npm versions, run `npm ci` there, followed by `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm run test`, or `npm run build`.
 
 ## Repository layout
 

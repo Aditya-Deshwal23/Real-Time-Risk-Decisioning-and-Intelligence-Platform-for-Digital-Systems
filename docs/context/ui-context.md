@@ -880,6 +880,8 @@ WCAG 2.2 AA is the engineering target, as in the charter. No claim of conformanc
 
 ## 17. Storybook, testing and visual regression
 
+The Phase 1 console foundation pins TypeScript 6.0.3 and ESLint 9.39.5 to retain the required type-aware and accessibility lint rules with compatible plugin peer ranges. Exact package versions and registry sources live in `../compatibility-matrix.md`. Vitest and Testing Library use `jsdom` only as a test environment; it is not a runtime dependency.
+
 | Layer | Tooling | Scope |
 |---|---|---|
 | Stories | Storybook, with MSW handlers built from OpenAPI examples | One story file per component and per page composition; every state in light and dark; interaction `play` functions |
