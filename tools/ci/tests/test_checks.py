@@ -1,5 +1,7 @@
 import importlib.util
 import json
+import ast
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -18,6 +20,38 @@ def load_module(name: str):
 
 
 class RepositoryCheckTests(unittest.TestCase):
+    def test_import_boundaries_and_python_pin(self):
+        root = TOOLS.parents[1]
+        forbidden = {
+            "ml": "verdict_model_service",
+            "model-service": "verdict_ml",
+        }
+        violations: list[str] = []
+        for project, forbidden_package in forbidden.items():
+            for source in (root / project / "src").rglob("*.py"):
+                tree = ast.parse(
+                    source.read_text(encoding="utf-8"), filename=str(source)
+                )
+                for node in ast.walk(tree):
+                    imported = None
+                    if isinstance(node, ast.Import):
+                        for alias in node.names:
+                            imported = alias.name
+                            if imported == forbidden_package or imported.startswith(
+                                f"{forbidden_package}.",
+                            ):
+                                violations.append(f"{source}: imports {imported}")
+                    elif isinstance(node, ast.ImportFrom) and node.module:
+                        imported = node.module
+                        if imported == forbidden_package or imported.startswith(
+                            f"{forbidden_package}.",
+                        ):
+                            violations.append(f"{source}: imports {imported}")
+        self.assertEqual(violations, [])
+        pinned = (root / ".python-version").read_text(encoding="utf-8").strip()
+        self.assertEqual(pinned, "3.13")
+        self.assertEqual(sys.version_info[:2], (3, 13))
+
     def test_docs_accepts_clean_markdown_and_rejects_banned_phrase(self):
         check_docs = load_module("check_docs")
         with tempfile.TemporaryDirectory() as directory:
@@ -54,6 +88,10 @@ class RepositoryCheckTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / "README.md").write_text("small\n", encoding="utf-8")
+            self.assertEqual(check_size.check_size(root), [])
+
+            exact = root / "exact.bin"
+            exact.write_bytes(b"x" * check_size.MAX_BYTES)
             self.assertEqual(check_size.check_size(root), [])
 
             large = root / "large.bin"
@@ -94,6 +132,13 @@ class RepositoryCheckTests(unittest.TestCase):
                 any("outside ml/notebooks/" in failure for failure in failures)
             )
 
+            invalid = allowed / "invalid.ipynb"
+            invalid.write_text("{not-json", encoding="utf-8")
+            failures = check_notebooks.check_notebooks(root)
+            self.assertTrue(
+                any("invalid notebook JSON" in failure for failure in failures)
+            )
+
     def test_context_refs_accepts_identical_pointers_and_missing_ref_fails(self):
         check_context_refs = load_module("check_context_refs")
         with tempfile.TemporaryDirectory() as directory:
@@ -113,6 +158,54 @@ class RepositoryCheckTests(unittest.TestCase):
             (root / "docs" / "context" / "architecture.md").unlink()
             failures = check_context_refs.check_context_refs(root)
             self.assertTrue(any("context path" in failure for failure in failures))
+
+            (root / "docs" / "context" / "architecture.md").write_text(
+                "", encoding="utf-8"
+            )
+            (root / ".github" / "copilot-instructions.md").write_text(
+                "Different pointer\n", encoding="utf-8"
+            )
+            failures = check_context_refs.check_context_refs(root)
+            self.assertTrue(any("differ" in failure for failure in failures))
+
+    def test_docs_index_completeness_and_matrix_sources(self):
+        check_docs = load_module("check_docs")
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "docs").mkdir()
+            (root / "docs" / "README.md").write_text(
+                "# Docs\n[Guide](guide.md)\n"
+                "[Compatibility Matrix](compatibility-matrix.md)\n",
+                encoding="utf-8",
+            )
+            (root / "docs" / "guide.md").write_text("# Guide\n", encoding="utf-8")
+            (root / "docs" / "compatibility-matrix.md").write_text(
+                "# Compatibility Matrix\n"
+                "| Ecosystem | Package or tool | Version | Verification source |\n"
+                "|---|---|---|---|\n"
+                "| Tool | Example | 1.0.0 | https://example.com verified 2026-11-21 |\n",
+                encoding="utf-8",
+            )
+            self.assertEqual(check_docs.check_docs_index_completeness(root), [])
+            self.assertEqual(check_docs.check_compatibility_matrix(root), [])
+
+            (root / "docs" / "orphan.md").write_text("# Orphan\n", encoding="utf-8")
+            failures = check_docs.check_docs_index_completeness(root)
+            self.assertTrue(
+                any("absent from docs/README.md" in failure for failure in failures)
+            )
+
+            (root / "docs" / "compatibility-matrix.md").write_text(
+                "# Compatibility Matrix\n"
+                "| Ecosystem | Package or tool | Version | Verification source |\n"
+                "|---|---|---|---|\n"
+                "| Tool | Example | 1.0.0 | no-source |\n",
+                encoding="utf-8",
+            )
+            failures = check_docs.check_compatibility_matrix(root)
+            self.assertTrue(
+                any("no official source URL" in failure for failure in failures)
+            )
 
 
 if __name__ == "__main__":

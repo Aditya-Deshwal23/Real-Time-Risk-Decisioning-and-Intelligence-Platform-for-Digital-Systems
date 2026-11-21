@@ -70,7 +70,9 @@ jobs:
       - run: uv run ruff check .
       - run: uv run ruff format --check .
       - run: uv run mypy ml/src model-service/src
-      - run: uv run pytest ml/tests model-service/tests -m "not slow"
+      - run: uv run pytest tools/ci/tests -q
+      - run: uv run pytest ml/tests -m "not slow"
+      - run: uv run pytest model-service/tests -m "not slow"
 
   status:
     name: Python / status

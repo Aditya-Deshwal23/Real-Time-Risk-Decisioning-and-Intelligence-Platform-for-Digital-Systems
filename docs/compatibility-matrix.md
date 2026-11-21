@@ -34,7 +34,7 @@
 | Repository | astral-sh/setup-uv | 9.0.0 (SHA `c771a70e6277c0a99b617c7a806ffedaca235ff9`) | [GitHub release: astral-sh/setup-uv v9.0.0](https://github.com/astral-sh/setup-uv/releases/tag/v9.0.0), verified 2026-11-21 | uv 0.13.9 setup and `uv.lock` cache | verified |
 | Repository | gradle/actions setup-gradle | 6.4.1 (SHA `7296c772c13d12d9871528814b51fb2143c138ef`) | [GitHub release: gradle/actions v6.4.1](https://github.com/gradle/actions/releases/tag/v6.4.1), verified 2026-11-21 | Gradle wrapper validation and build cache | verified |
 | Web | Node.js | 26.13.0 | [Node.js v26.13.0 release](https://nodejs.org/en/blog/release/v26.13.0), verified 2026-11-21 | Installed version; satisfies Vite, Vitest, jsdom and ESLint engine ranges | verified |
-| Web | npm | 11.20.0 | `npm --version`, official npm CLI release metadata, verified 2026-11-21 | Lockfile generated with npm; frozen installs use `npm ci` | verified |
+| Web | npm | 11.20.0 | [npm CLI documentation](https://docs.npmjs.com/cli/v11), official npm CLI release metadata, verified 2026-11-21 | Lockfile generated with npm; frozen installs use `npm ci` | verified |
 | Web | React / React DOM | 19.3.1 | [npm React 19.3.1](https://www.npmjs.com/package/react/v/19.3.1), [npm React DOM 19.3.1](https://www.npmjs.com/package/react-dom/v/19.3.1), verified 2026-11-21 | React DOM peer requires React `^19.3.1` | verified |
 | Web | Vite | 8.3.8 | [npm Vite 8.3.8](https://www.npmjs.com/package/vite/v/8.3.8), verified 2026-11-21 | Node engine `^20.19.0 || >=22.12.0` | verified |
 | Web | `@vitejs/plugin-react` | 6.3.0 | [npm @vitejs/plugin-react 6.3.0](https://www.npmjs.com/package/@vitejs/plugin-react/v/6.3.0), verified 2026-11-21 | Vite peer `^8.0.0` | verified |
