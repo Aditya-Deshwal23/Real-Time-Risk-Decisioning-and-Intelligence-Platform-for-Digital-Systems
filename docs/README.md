@@ -6,6 +6,8 @@
 
 **First implementation phase:** Phase 1 — Empty repository to professional monorepo.
 
+This index is the source for the repository documentation set.
+
 ## Documentation set
 
 | Path | Purpose | First phase | Status |
