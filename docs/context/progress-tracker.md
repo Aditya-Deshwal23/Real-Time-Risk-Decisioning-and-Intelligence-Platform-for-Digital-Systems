@@ -108,7 +108,7 @@ State "Accepted" means the owner decided it. "Drafted" means it is in a delivere
 | T-014 | Python projects `model-service/` and `ml/`, each with its own `pyproject.toml` and `uv` lock | 1 | CP-01.3 |
 | T-015 | Console skeleton in `console/` with the npm scripts named in `code-standards.md` | 1 | CP-01.4 |
 | T-016 | CI skeleton, pre-commit hooks, the `tools/ci/` checks and `docs/compatibility-matrix.md` | 1 | CP-01.5 |
-| T-017 | Local environment: Docker Compose with PostgreSQL, Kafka, Redis and Keycloak | 2 | The Phase 2 prompts |
+| T-017 | Local environment: Docker Compose with PostgreSQL, Redis, health checks and bootstrap | 2 | CP-02.1 |
 
 ## 8. Blockers
 
@@ -231,6 +231,7 @@ One row per implementation unit, added by the assistant in the same change (AW-4
 | 2026-11-21 | CP-01.5 A | Repository checks, pre-commit hooks, and compatibility matrix | PR #2 (merged) | 6 script tests PASSED; four direct scripts PASSED; pre-commit run --all-files PASSED in 3.70 seconds | Not applicable for repository tooling | Completed | DONE |
 | 2026-11-21 | CP-01.5 B | Change-aware GitHub Actions workflows and aggregate status | PR #3 (merged); follow-up PR #5 (merged); cleanup PR #7 (merged) | PyYAML parse PASSED; pre-commit run --all-files PASSED; script tests PASSED; docs-only PR #4 aggregate status PASSED with JVM/Python/console builds skipped; platform-only PR #6 aggregate status PASSED with JVM build running | Pending | Demonstration evidence recorded | IN REVIEW |
 | 2026-11-21 | Phase 1 corrective unit | Python CI isolation, docs-index completeness, repository check edge tests, extra tests-directory removal, branch protection | Pending corrective PR | Repository scripts and 8 tests run locally; full ecosystem gates rerun before this row is marked DONE | Pending RV-01 rerun | Owner review pending | IN REVIEW |
+| 2026-11-21 | CP-02.1 | Local PostgreSQL and Redis Compose base | Pending review PR | Docker 29.6.1, Compose v5.3.0; healthy services; verify, idempotency, loopback, SCRAM HBA, Redis auth and negative health passed | Pending | Owner review pending | IN REVIEW |
 
 ## 16.1 Proposed learning matrix — PD-6
 
@@ -305,15 +306,25 @@ In progress: ai-workflow-rules.md.
 Next prompt: None.
 ```
 
+```text
+HANDOFF 2026-11-21 infra/cp-02-1-local-base
+Done: Docker Compose PostgreSQL/Redis stack, idempotent bootstrap, local scripts, verification, quickstart and compatibility rows.
+In progress: CP-02.1 owner review; no commit or push made.
+Uncommitted: infra/compose, infra/bootstrap, docs, README and compatibility/progress updates.
+Resume with: review and commit CP-02.1, then run required GitHub checks.
+Approvals awaited: owner review and explicit commit/push/PR approval.
+Next prompt: None until CP-02.1 approval.
+```
+
 ## 20. Next implementation instruction
 
 ```text
 NEXT IMPLEMENTATION INSTRUCTION
 Status: IN PROGRESS.
-Prompt: RV-01 corrective rerun, then CP-02.1 if RV-01 approves.
-Prerequisites to confirm: Phase 1 corrective PR merged; all required status checks pass; main remains protected with the five recorded status names.
+Prompt: CP-02.1 owner review.
+Prerequisites to confirm: Compose config validates; PostgreSQL and Redis are healthy; verify, idempotency, loopback, SCRAM HBA, Redis auth and negative health pass.
 Required status checks: `JVM / status`, `Python / status`, `Console / status`, `Docs and tools / status`, `CI / aggregate status`.
-Approvals still needed: owner and RV-01 milestone approval.
+Approvals still needed: owner commits/pushes or approves the CP-02.1 PR; owner reviews the milestone.
 ```
 
 Update this file after every meaningful implementation unit (AW-41).

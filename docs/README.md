@@ -16,6 +16,7 @@
 | [`context/ui-context.md`](context/ui-context.md) | Console design and interaction rules | Phase 0 — Product specification and architecture lock | current |
 | [`context/ai-workflow-rules.md`](context/ai-workflow-rules.md) | Assistant workflow and standing rules | Phase 0 — Product specification and architecture lock | current |
 | [`context/progress-tracker.md`](context/progress-tracker.md) | Project state and phase tracker | Phase 0 — Product specification and architecture lock | current |
+| [`quickstart.md`](quickstart.md) | Local infrastructure and development quickstart | Phase 2 — Development environment and containers | current |
 | [`adr/README.md`](adr/README.md) | Architecture decision record index and numbering | Phase 1 — Empty repository to professional monorepo | current |
 | [`adr/ADR-TEMPLATE.md`](adr/ADR-TEMPLATE.md) | Template for new architecture decisions | Phase 1 — Empty repository to professional monorepo | current |
 | [`.github/workflows/`](../.github/workflows/) | Change-aware CI workflows and aggregate status | Phase 1 — Empty repository to professional monorepo | current |
