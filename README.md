@@ -14,6 +14,10 @@ The Python workspace uses uv with Python 3.13 and one committed `uv.lock`. Run `
 
 The React and TypeScript console toolchain is in `console/`. With the pinned Node and npm versions, run `npm ci` there, followed by `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm run test`, or `npm run build`.
 
+## Continuous integration
+
+Pull requests run change-aware workflows for JVM, Python, console, and docs/tools areas. The always-running status checks to require in branch protection are `JVM / status`, `Python / status`, `Console / status`, `Docs and tools / status`, and `CI / aggregate status`.
+
 ## Repository checks
 
 Pre-commit runs file hygiene, secret scanning, documentation and artifact checks, plus the JVM, Python and console format checks. Install and run it from the repository root:
