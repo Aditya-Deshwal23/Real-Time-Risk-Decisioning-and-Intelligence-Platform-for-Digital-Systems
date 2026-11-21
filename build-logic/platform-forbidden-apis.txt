@@ -1,0 +1,9 @@
+@defaultMessage Construct JSON mappers only in the platform JSON configuration class.
+tools.jackson.databind.ObjectMapper#<init>()
+tools.jackson.databind.ObjectMapper#<init>(tools.jackson.core.TokenStreamFactory)
+tools.jackson.databind.json.JsonMapper#<init>()
+tools.jackson.databind.json.JsonMapper#<init>(tools.jackson.core.json.JsonFactory)
+tools.jackson.databind.json.JsonMapper#<init>(tools.jackson.databind.json.JsonMapper$Builder)
+tools.jackson.databind.json.JsonMapper#builder()
+tools.jackson.databind.json.JsonMapper#builder(tools.jackson.core.json.JsonFactory)
+tools.jackson.databind.json.JsonMapper#builderWithJackson2Defaults()

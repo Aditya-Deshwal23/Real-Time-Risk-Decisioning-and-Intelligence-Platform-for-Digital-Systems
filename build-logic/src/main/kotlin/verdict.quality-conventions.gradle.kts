@@ -9,6 +9,10 @@ plugins {
 }
 
 val catalog = extensions.getByType<VersionCatalogsExtension>().named("libs")
+val forbiddenApiSignatures = mutableListOf(rootProject.file("build-logic/forbidden-apis.txt"))
+if (path == ":platform") {
+    forbiddenApiSignatures.add(rootProject.file("build-logic/platform-forbidden-apis.txt"))
+}
 
 checkstyle {
     toolVersion = catalog.findVersion("checkstyle").get().requiredVersion
@@ -28,7 +32,7 @@ spotbugs {
 
 forbiddenApis {
     bundledSignatures.add("jdk-system-out")
-    signaturesFiles = files(rootProject.file("build-logic/forbidden-apis.txt"))
+    signaturesFiles = files(forbiddenApiSignatures)
 }
 
 tasks.withType<SpotBugsTask>().configureEach {
