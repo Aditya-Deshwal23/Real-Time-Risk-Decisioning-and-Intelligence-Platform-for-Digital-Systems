@@ -6,6 +6,10 @@ VERDICT is a specification-first project for a real-time risk decisioning and in
 
 The JVM projects use the committed Gradle wrapper and Java 25 toolchain. With JDK 25 installed, run `./gradlew clean build` from the repository root to build and test the platform, stream, simulator, and shared JVM libraries.
 
+## Python workspace
+
+The Python workspace uses uv with Python 3.13 and one committed `uv.lock`. Run `uv sync --locked` from the repository root, then use the project READMEs for lint, format, type-check, and test commands.
+
 ## Repository layout
 
 | Path | Responsibility |
