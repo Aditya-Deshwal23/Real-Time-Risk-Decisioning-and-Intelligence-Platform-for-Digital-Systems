@@ -1,0 +1,17 @@
+{
+  "default_partitions": 1,
+  "default_replication_factor": 1,
+  "topics": [
+    {
+      "name": "verdict.smoke.v1",
+      "partitions": 1,
+      "replication_factor": 1,
+      "cleanup_policy": "delete",
+      "configs": {
+        "retention.ms": "604800000",
+        "segment.ms": "86400000",
+        "min.insync.replicas": "1"
+      }
+    }
+  ]
+}
