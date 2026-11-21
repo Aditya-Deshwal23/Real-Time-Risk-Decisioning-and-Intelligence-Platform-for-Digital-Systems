@@ -42,7 +42,7 @@ jobs:
           changed=false
           while IFS= read -r file; do
             case "$file" in
-              ml/*|model-service/*|pyproject.toml|uv.lock|.python-version)
+              ml/*|model-service/*|pyproject.toml|uv.lock|.python-version|.github/workflows/ci-python.yml)
                 changed=true
                 ;;
             esac
