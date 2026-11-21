@@ -1,0 +1,74 @@
+name: verdict-local
+
+services:
+  postgres:
+    image: ${POSTGRES_IMAGE:-postgres:17.12}
+    restart: unless-stopped
+    command:
+      - postgres
+      - -c
+      - hba_file=/etc/verdict-pg_hba.conf
+      - -c
+      - listen_addresses=*
+    environment:
+      TZ: UTC
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      VERDICT_OWNER_PASSWORD: ${VERDICT_OWNER_PASSWORD}
+      VERDICT_APP_PASSWORD: ${VERDICT_APP_PASSWORD}
+      VERDICT_WORKER_PASSWORD: ${VERDICT_WORKER_PASSWORD}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ../bootstrap/bootstrap.sh:/docker-entrypoint-initdb.d/00-verdict-bootstrap.sh:ro
+      - ../bootstrap/bootstrap.sql:/bootstrap/bootstrap.sql:ro
+      - ../bootstrap/pg_hba.conf:/etc/verdict-pg_hba.conf:ro
+    networks:
+      - verdict_local
+    mem_limit: ${POSTGRES_MAX_MEMORY:-1g}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -U "$${POSTGRES_USER}" -d postgres && PGPASSWORD="$${VERDICT_APP_PASSWORD}" psql -h 127.0.0.1 -U verdict_app -d verdict -tAc "SELECT 1" | grep -q 1
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+  redis:
+    image: ${REDIS_IMAGE:-redis:8.10.3}
+    restart: unless-stopped
+    environment:
+      TZ: UTC
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_MAXMEMORY: ${REDIS_MAXMEMORY:-256mb}
+    command:
+      - sh
+      - -ec
+      - exec redis-server --appendonly yes --requirepass "$$REDIS_PASSWORD" --maxmemory "$$REDIS_MAXMEMORY" --maxmemory-policy noeviction
+    ports:
+      - "127.0.0.1:${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - verdict_local
+    mem_limit: ${REDIS_MAX_MEMORY:-256m}
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - redis-cli -a "$$REDIS_PASSWORD" --no-auth-warning ping | grep -q PONG
+      interval: 5s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+networks:
+  verdict_local:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
