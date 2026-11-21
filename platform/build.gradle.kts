@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("dev.verdict.platform.PlatformApplication")
+    mainClass.set("dev.verdict.platform.web.PlatformApplication")
 }
 
 dependencies {
