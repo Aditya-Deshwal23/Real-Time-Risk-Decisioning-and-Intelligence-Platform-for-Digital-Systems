@@ -3,6 +3,7 @@ import json
 import secrets
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -40,6 +41,17 @@ def ensure_env() -> None:
         )
 
     lines = ENV_FILE.read_text(encoding="utf-8").splitlines()
+    existing_keys = {
+        line.split("=", 1)[0]
+        for line in lines
+        if "=" in line and not line.lstrip().startswith("#")
+    }
+    for example_line in ENV_EXAMPLE.read_text(encoding="utf-8").splitlines():
+        if "=" not in example_line or example_line.lstrip().startswith("#"):
+            continue
+        key = example_line.split("=", 1)[0]
+        if key not in existing_keys:
+            lines.append(example_line)
     updated = apply_generated_passwords(lines)
 
     ENV_FILE.write_text("\n".join(updated) + "\n", encoding="utf-8")
@@ -64,6 +76,8 @@ def apply_generated_passwords(lines: list[str]) -> list[str]:
         "VERDICT_WORKER_PASSWORD",
         "KEYCLOAK_PASSWORD",
         "REDIS_PASSWORD",
+        "MINIO_ROOT_USER",
+        "MINIO_ROOT_PASSWORD",
     )
     updated: list[str] = []
     for line in lines:
@@ -101,6 +115,33 @@ def run_bootstrap() -> None:
         print("PostgreSQL bootstrap failed", file=sys.stderr)
         print_failure(result)
         raise SystemExit(result.returncode)
+    topics = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).resolve().parents[1] / "bootstrap" / "topics.py"),
+            "bootstrap",
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if topics.returncode != 0:
+        print(topics.stderr.strip(), file=sys.stderr)
+        raise SystemExit(topics.returncode)
+    buckets = subprocess.run(
+        [
+            sys.executable,
+            str(Path(__file__).resolve().parents[1] / "bootstrap" / "buckets.py"),
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if buckets.returncode != 0:
+        print(buckets.stderr.strip(), file=sys.stderr)
+        raise SystemExit(buckets.returncode)
 
 
 def start(timeout: int) -> None:
@@ -152,7 +193,7 @@ def status() -> int:
     print(f"{'Service':<12} {'State':<12} {'Health':<12}")
     print("-" * 38)
     has_unhealthy = False
-    for service in ("postgres", "redis"):
+    for service in ("postgres", "redis", "kafka", "object-store"):
         info = services.get(service, {"state": "missing", "health": "missing"})
         state = info["state"] or "missing"
         health = info["health"] or "missing"
@@ -198,7 +239,13 @@ def reset(confirm: str | None) -> None:
 def port_check() -> int:
     ensure_env()
     failed = False
-    for service, port in (("postgres", "5432"), ("redis", "6379")):
+    for service, port in (
+        ("postgres", "5432"),
+        ("redis", "6379"),
+        ("kafka", "29092"),
+        ("object-store", "9000"),
+        ("object-store", "9001"),
+    ):
         result = compose("port", service, port)
         if result.returncode != 0:
             print(f"{service}: unavailable", file=sys.stderr)
@@ -231,37 +278,44 @@ def verify() -> int:
             "verdict_owner",
             values["VERDICT_OWNER_PASSWORD"],
             "verdict",
+            "VERDICT_OWNER_PASSWORD",
         ),
         (
             "PostgreSQL application",
             "verdict_app",
             values["VERDICT_APP_PASSWORD"],
             "verdict",
+            "VERDICT_APP_PASSWORD",
         ),
         (
             "PostgreSQL worker",
             "verdict_worker",
             values["VERDICT_WORKER_PASSWORD"],
             "verdict",
+            "VERDICT_WORKER_PASSWORD",
         ),
         (
             "Keycloak",
             "keycloak",
             values["KEYCLOAK_PASSWORD"],
             "keycloak",
+            "KEYCLOAK_PASSWORD",
         ),
     )
     failed = False
-    for label, role, password, database in postgres_checks:
+    for label, role, _password, database, password_env_key in postgres_checks:
         result = compose(
             "exec",
             "-T",
             "postgres",
             "sh",
             "-ec",
-            ('PGPASSWORD="$1" psql -h 127.0.0.1 -U "$2" -d "$3" -tAc "SELECT 1"'),
+            (
+                f'PGPASSWORD="${{{password_env_key}}}" '
+                'psql -h 127.0.0.1 -U "$1" -d "$2" '
+                '-tAc "SELECT 1"'
+            ),
             "verify",
-            password,
             role,
             database,
         )
@@ -381,18 +435,202 @@ def verify() -> int:
     authenticated = compose(
         "exec",
         "-T",
-        "-e",
-        f"REDISCLI_AUTH={values['REDIS_PASSWORD']}",
         "redis",
-        "redis-cli",
-        "--no-auth-warning",
-        "ping",
+        "sh",
+        "-ec",
+        'redis-cli -a "$REDIS_PASSWORD" --no-auth-warning ping',
     )
     if authenticated.returncode != 0 or "PONG" not in authenticated.stdout.upper():
         print("Redis authenticated PING failed", file=sys.stderr)
         failed = True
     else:
         print("Redis authenticated PING passed")
+
+    kafka_container = compose(
+        "exec",
+        "-T",
+        "kafka",
+        "sh",
+        "-ec",
+        (
+            "echo cp022-container | /opt/kafka/bin/kafka-console-producer.sh "
+            "--bootstrap-server kafka:9092 --topic verdict.smoke.v1 "
+            "&& timeout 10 /opt/kafka/bin/kafka-console-consumer.sh "
+            "--bootstrap-server kafka:9092 --topic verdict.smoke.v1 "
+            "--from-beginning --max-messages 1"
+        ),
+    )
+    if kafka_container.returncode != 0:
+        print("Kafka container listener produce/consume failed", file=sys.stderr)
+        print_failure(kafka_container)
+        failed = True
+    elif "cp022-container" not in kafka_container.stdout:
+        print(
+            "Kafka container listener did not consume the smoke message",
+            file=sys.stderr,
+        )
+        failed = True
+    else:
+        print("Kafka container listener produce/consume passed")
+
+    host_client = subprocess.run(
+        [
+            "docker",
+            "run",
+            "--rm",
+            "--network",
+            "verdict-local_verdict_local",
+            "--add-host",
+            "host.docker.internal:host-gateway",
+            "apache/kafka:4.1.2",
+            "sh",
+            "-ec",
+            (
+                "echo cp022-host | /opt/kafka/bin/kafka-console-producer.sh "
+                "--bootstrap-server host.docker.internal:29092 "
+                "--topic verdict.smoke.v1 "
+                "&& timeout 10 /opt/kafka/bin/kafka-console-consumer.sh "
+                "--bootstrap-server host.docker.internal:29092 "
+                "--topic verdict.smoke.v1 --from-beginning --max-messages 1"
+            ),
+        ],
+        cwd=REPO_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    if host_client.returncode != 0:
+        print("Kafka host listener produce/consume failed", file=sys.stderr)
+        if host_client.stderr.strip():
+            print(host_client.stderr.strip(), file=sys.stderr)
+        failed = True
+    else:
+        print("Kafka host listener produce/consume passed")
+
+    undefined = compose(
+        "exec",
+        "-T",
+        "kafka",
+        "sh",
+        "-ec",
+        (
+            "echo cp022-undefined | timeout 10 "
+            "/opt/kafka/bin/kafka-console-producer.sh "
+            "--bootstrap-server kafka:9092 "
+            "--topic verdict.undefined.v1"
+        ),
+    )
+    if undefined.returncode == 0:
+        print("Undefined Kafka topic unexpectedly accepted", file=sys.stderr)
+        failed = True
+    else:
+        print("Undefined Kafka topic rejected")
+
+    with tempfile.NamedTemporaryFile(
+        mode="w",
+        suffix=".json",
+        encoding="utf-8",
+        delete=True,
+    ) as drift_file:
+        json.dump(
+            {
+                "default_partitions": 1,
+                "default_replication_factor": 1,
+                "topics": [
+                    {
+                        "name": "verdict.smoke.v1",
+                        "partitions": 2,
+                        "replication_factor": 1,
+                        "cleanup_policy": "delete",
+                        "configs": {
+                            "retention.ms": "604800000",
+                            "segment.ms": "86400000",
+                            "min.insync.replicas": "1",
+                        },
+                    }
+                ],
+            },
+            drift_file,
+        )
+        drift_file.flush()
+        drift = subprocess.run(
+            [
+                sys.executable,
+                str(REPO_ROOT / "infra" / "bootstrap" / "topics.py"),
+                "bootstrap",
+                "--definitions",
+                drift_file.name,
+            ],
+            cwd=REPO_ROOT,
+            check=False,
+            capture_output=True,
+            text=True,
+        )
+    if drift.returncode == 0:
+        print("Kafka partition drift was not detected", file=sys.stderr)
+        failed = True
+    elif "partition drift" not in (drift.stdout + drift.stderr).lower():
+        print("Kafka drift test failed without drift evidence", file=sys.stderr)
+        failed = True
+    else:
+        print("Kafka partition drift detected")
+
+    minio_round_trip = compose(
+        "run",
+        "--rm",
+        "--entrypoint",
+        "sh",
+        "object-bootstrap",
+        "-c",
+        (
+            "printf 'cp022-object' | mc pipe "
+            "local/verdict-datasets/cp022-smoke.txt "
+            "&& mc cat local/verdict-datasets/cp022-smoke.txt "
+            "&& mc rm local/verdict-datasets/cp022-smoke.txt"
+        ),
+    )
+    if (
+        minio_round_trip.returncode != 0
+        or "cp022-object" not in minio_round_trip.stdout
+    ):
+        print("MinIO object put/get round trip failed", file=sys.stderr)
+        print_failure(minio_round_trip)
+        failed = True
+    else:
+        print("MinIO object put/get round trip passed")
+
+    bucket_list = compose(
+        "run",
+        "--rm",
+        "--entrypoint",
+        "sh",
+        "object-bootstrap",
+        "-c",
+        "mc ls local",
+    )
+    if bucket_list.returncode != 0:
+        print("MinIO bucket listing failed", file=sys.stderr)
+        failed = True
+    else:
+        missing_buckets = [
+            bucket
+            for bucket in (
+                "verdict-datasets",
+                "verdict-models",
+                "verdict-replay-reports",
+                "verdict-exports",
+                "verdict-event-archive",
+            )
+            if bucket not in bucket_list.stdout
+        ]
+        if missing_buckets:
+            print(
+                f"MinIO buckets missing: {', '.join(missing_buckets)}",
+                file=sys.stderr,
+            )
+            failed = True
+        else:
+            print("MinIO five-bucket bootstrap passed")
 
     if port_check() != 0:
         failed = True
@@ -449,7 +687,10 @@ def build_parser() -> argparse.ArgumentParser:
     subcommands.add_parser("ports")
 
     negative = subcommands.add_parser("negative-health")
-    negative.add_argument("service", choices=("postgres", "redis"))
+    negative.add_argument(
+        "service",
+        choices=("postgres", "redis", "kafka", "object-store"),
+    )
     return parser
 
 

@@ -21,12 +21,17 @@ class DevScriptTests(unittest.TestCase):
             "REDIS_PASSWORD=generate-on-first-run",
             "POSTGRES_PASSWORD=",
             "VERDICT_APP_PASSWORD=local-placeholder",
+            "MINIO_ROOT_PASSWORD=generate-on-first-run",
             "POSTGRES_PORT=5432",
         ]
         updated = DEV.apply_generated_passwords(lines)
         values = dict(line.split("=", 1) for line in updated if "=" in line)
         self.assertNotIn(values["REDIS_PASSWORD"], ("", "generate-on-first-run"))
         self.assertNotIn(values["POSTGRES_PASSWORD"], ("", "generate-on-first-run"))
+        self.assertNotIn(
+            values["MINIO_ROOT_PASSWORD"],
+            ("", "generate-on-first-run"),
+        )
         self.assertEqual(values["POSTGRES_PORT"], "5432")
 
 
