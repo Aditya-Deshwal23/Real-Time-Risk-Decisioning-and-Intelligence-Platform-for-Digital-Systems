@@ -21,12 +21,31 @@ The project uses the Node.js version in `.nvmrc`, npm, and the versions pinned i
 
 ## Structure
 
-- `src/app/` — placeholder application page
-- `src/styles/` — CSS reset only
+- `src/app/` — application page
+- `src/styles/tokens.css` — the shared raw scale and semantic token source
+- `src/styles/global.css` — font faces and global application primitives
+- `src/theme/` — theme provider and `useTheme` hook
+- `src/components/ui/` — icon allow-list and Icon wrapper
 - `src/test/` — unit tests
 - `src/main.tsx` — browser entry point
 
-No product feature folders, design tokens, routes, or component libraries are included yet.
+## Tokens and themes
+
+`src/styles/tokens.css` is the source of truth. Dark values are defined at `:root`; light values override the identical semantic names under `:root[data-theme="light"]`. Components must use semantic custom properties such as `var(--color-text-primary)` and spacing, radius, z-index, motion and breakpoint tokens. Raw values belong only in the token source.
+
+The default theme is dark. The `verdict-theme-preference` storage key accepts `light`, `dark` or `system`. `public/theme-init.js` applies the stored choice or falls back to dark before first paint without an inline script. The React provider updates the choice, follows OS changes for `system`, and falls back safely when storage is blocked.
+
+## Fonts and icons
+
+IBM Plex Sans (400, 500, 600) and IBM Plex Mono (400, 500) are self-hosted Latin WOFF2 files in `public/fonts`. Font licences are in `public/fonts/*-LICENSE.txt` and recorded in `docs/compatibility-matrix.md`.
+
+Lucide icons come only through `src/components/ui/icons.ts`. `src/components/ui/Icon.tsx` applies 14, 16, 20 or 24 px token sizes and the 1.75 token stroke. Decorative icons require `decorative`; meaningful icons require a string `label`.
+
+## Theme and token checks
+
+- `tools/ci/check_tokens.py` rejects raw hex colours and off-scale spacing, radius or z-index values outside `tokens.css`.
+- `tools/ci/check_contrast.py` parses the theme token values and verifies the contrast pairs declared in `ui-context.md`.
+- Theme fixtures, icon accessibility and the separate theme-initialisation script are covered by Vitest tests.
 
 ## Platform connection in development
 

@@ -1,6 +1,6 @@
 # Compatibility Matrix
 
-**Last reviewed:** 2026-11-21
+**Last reviewed:** 2026-11-22
 
 | Ecosystem | Package or tool | Version | Verification source | Compatibility notes | Status |
 |---|---|---|---|---|---|
@@ -27,6 +27,13 @@
 | Repository | pre-commit | 4.7.0 | [PyPI: pre-commit 4.7.0](https://pypi.org/project/pre-commit/4.7.0/), verified 2026-11-21 | Pre-commit hook framework | verified |
 | Repository | detect-secrets | 1.5.0 | [PyPI: detect-secrets 1.5.0](https://pypi.org/project/detect-secrets/1.5.0/), verified 2026-11-21 | Local staged-file secret scanning | verified |
 | Repository | pre-commit-hooks | 6.0.0 | [GitHub release: pre-commit-hooks v6.0.0](https://github.com/pre-commit/pre-commit-hooks/releases/tag/v6.0.0), verified 2026-11-21 | File hygiene hooks | verified |
+| Infrastructure | PostgreSQL official image | 17.12 | [Docker Official Image: postgres 17.12](https://hub.docker.com/_/postgres), verified 2026-11-21 | Exact tag; architecture pins PostgreSQL 17 | verified |
+| Infrastructure | Redis official image | 8.10.3 | [Docker Official Image: redis 8.10.3](https://hub.docker.com/_/redis), verified 2026-11-21 | Exact tag; architecture requires a rebuildable Redis materialization | verified |
+| Infrastructure | Apache Kafka official image | 4.1.2 | [Docker | Apache Kafka](https://kafka.apache.org/41/getting-started/docker/), [Docker image manifest](https://hub.docker.com/r/apache/kafka), verified 2026-11-21 | Combined KRaft broker/controller; plaintext local listeners; replication factor 1 | verified |
+| Infrastructure | MinIO source | RELEASE.2025-10-15T17-29-55Z | [MinIO source release](https://github.com/minio/minio/releases/tag/RELEASE.2025-10-15T17-29-55Z), [GNU AGPLv3 license](https://github.com/minio/minio/blob/master/LICENSE), verified 2026-11-21 | Vendor repository archived 2026-04-25; owner approved source build because Docker Hub tags are unavailable | verified |
+| Infrastructure | MinIO MC source | RELEASE.2025-08-13T08-35-41Z | [MC source release](https://github.com/minio/mc/releases/tag/RELEASE.2025-08-13T08-35-41Z), verified 2026-11-21 | Source-built helper for idempotent bucket bootstrap and object round trips | verified |
+| Infrastructure | Source-build Go base | 1.24-alpine3.23 | [Docker Official Image: golang](https://hub.docker.com/_/golang), verified 2026-11-21 | Exact tag used to compile the pinned MinIO and MC source releases | verified |
+| Infrastructure | Source-build Alpine runtime | 3.23 | [Docker Official Image: alpine](https://hub.docker.com/_/alpine), verified 2026-11-21 | Exact runtime base for source-built MinIO and MC binaries | verified |
 | Repository | GitHub Actions checkout | 7.0.1 (SHA `3d3c42e5aac5ba805825da76410c181273ba90b1`) | [GitHub release: actions/checkout v7.0.1](https://github.com/actions/checkout/releases/tag/v7.0.1), verified 2026-11-21 | Workflow source checkout | verified |
 | Repository | GitHub Actions setup-java | 6.3.0 (SHA `d1374f8ac74474200d16ef8ecee22c7ae7a51880`) | [GitHub release: actions/setup-java v6.3.0](https://github.com/actions/setup-java/releases/tag/v6.3.0), verified 2026-11-21 | Temurin 25 setup and Gradle cache | verified |
 | Repository | GitHub Actions setup-python | 7.1.0 (SHA `6d4fd22b20465ccc0f7354476588e8df7c9ca0e0`) | [GitHub release: actions/setup-python v7.1.0](https://github.com/actions/setup-python/releases/tag/v7.1.0), verified 2026-11-21 | Python 3.13 setup | verified |
@@ -48,3 +55,12 @@
 | Web | jsdom | 31.0.1 | [npm jsdom 31.0.1](https://www.npmjs.com/package/jsdom/v/31.0.1), verified 2026-11-21 | Test-only environment; Node engine `^22.22.2 || ^24.15.0 || >=26.0.0` | verified |
 | Web | React type declarations | 19.3.0 (`@types/react`), 19.3.0 (`@types/react-dom`) | [npm @types/react 19.3.0](https://www.npmjs.com/package/@types/react/v/19.3.0), [npm @types/react-dom 19.3.0](https://www.npmjs.com/package/@types/react-dom/v/19.3.0), verified 2026-11-21 | Type declarations for the pinned React runtime | verified |
 | Web | Prettier | 3.10.1 | [npm Prettier 3.10.1](https://www.npmjs.com/package/prettier/v/3.10.1), verified 2026-11-21 | Formatting only; lint remains a separate gate | verified |
+| Web | Tailwind CSS / Vite integration | 4.3.5 | [npm tailwindcss 4.3.5](https://www.npmjs.com/package/tailwindcss/v/4.3.5), [npm @tailwindcss/vite 4.3.5](https://www.npmjs.com/package/@tailwindcss/vite/v/4.3.5), verified 2026-11-22 | CSS-variable token source; MIT licence | verified |
+| Web | Lucide | 1.72.0 | [npm lucide-react 1.72.0](https://www.npmjs.com/package/lucide-react/v/1.72.0), [Lucide repository](https://github.com/lucide-icons/lucide), verified 2026-11-22 | Individual imports through the icon allow-list; ISC licence | verified |
+| Web | IBM Plex Sans / IBM Plex Mono | 5.3.0 fontsource packages | [Fontsource IBM Plex Sans](https://fontsource.org/fonts/ibm-plex-sans), [Fontsource IBM Plex Mono](https://fontsource.org/fonts/ibm-plex-mono), verified 2026-11-22 | Latin WOFF2 assets served from `console/public/fonts`; SIL Open Font Licence 1.1 | verified |
+
+## Licences
+
+- IBM Plex Sans 400, 500, 600 Latin WOFF2 - Publisher: IBM / Fontsource - Licence: SIL Open Font Licence 1.1 - Source: [Fontsource package 5.3.0](https://www.npmjs.com/package/@fontsource/ibm-plex-sans/v/5.3.0) - Recorded: 2026-11-22
+- IBM Plex Mono 400, 500 Latin WOFF2 - Publisher: IBM / Fontsource - Licence: SIL Open Font Licence 1.1 - Source: [Fontsource package 5.3.0](https://www.npmjs.com/package/@fontsource/ibm-plex-mono/v/5.3.0) - Recorded: 2026-11-22
+- Lucide icons - Publisher: Lucide Contributors - Licence: ISC - Source: [lucide-react 1.72.0](https://www.npmjs.com/package/lucide-react/v/1.72.0) - Recorded: 2026-11-22

@@ -1,0 +1,9 @@
+{
+  "buckets": [
+    "verdict-datasets",
+    "verdict-models",
+    "verdict-replay-reports",
+    "verdict-exports",
+    "verdict-event-archive"
+  ]
+}

@@ -10,6 +10,19 @@ The JVM projects use the committed Gradle wrapper and Java 25 toolchain. With JD
 
 The Python workspace uses uv with Python 3.13 and one committed `uv.lock`. Run `uv sync --locked` from the repository root, then use the project READMEs for lint, format, type-check, and test commands.
 
+## Local infrastructure
+
+PostgreSQL and Redis start from the repository root:
+
+```text
+infra/compose/dev.sh start
+infra/compose/dev.sh status
+infra/compose/dev.sh verify
+infra/compose/dev.sh stop
+```
+
+PowerShell users can use `.\infra\compose\dev.ps1`. See the [quickstart](docs/quickstart.md) and [Compose README](infra/compose/README.md).
+
 ## Console
 
 The React and TypeScript console toolchain is in `console/`. With the pinned Node and npm versions, run `npm ci` there, followed by `npm run lint`, `npm run format:check`, `npm run typecheck`, `npm run test`, or `npm run build`.
