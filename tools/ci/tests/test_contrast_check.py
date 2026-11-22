@@ -49,8 +49,8 @@ class ContrastCheckTests(unittest.TestCase):
                 ':root[data-theme="light"] {\n',
             )
             text = text.replace(
-                "    --color-text-primary: #0f1720;",
-                "    --color-text-primary: #f3f5f7;",
+                "  --color-text-primary: #0f1720;",
+                "  --color-text-primary: #f3f5f7;",
             )
             target.write_text(text, encoding="utf-8")
             failures = check_contrast.check_token_file(target)

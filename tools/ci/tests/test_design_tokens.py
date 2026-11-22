@@ -60,8 +60,8 @@ class TokenCheckTests(unittest.TestCase):
             token_file = root / "console/src/styles/tokens.css"
             text = token_file.read_text(encoding="utf-8")
             text = text.replace(
-                "    --color-focus-ring: #1a5fd0;",
-                "    /* intentionally missing focus ring */",
+                "  --color-focus-ring: #1a5fd0;",
+                "  /* intentionally missing focus ring */",
             )
             token_file.write_text(text, encoding="utf-8")
             failures = check_tokens.check_token_coverage(token_file)
