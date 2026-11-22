@@ -58,6 +58,12 @@
 | Web | Tailwind CSS / Vite integration | 4.3.5 | [npm tailwindcss 4.3.5](https://www.npmjs.com/package/tailwindcss/v/4.3.5), [npm @tailwindcss/vite 4.3.5](https://www.npmjs.com/package/@tailwindcss/vite/v/4.3.5), verified 2026-11-22 | CSS-variable token source; MIT licence | verified |
 | Web | Lucide | 1.72.0 | [npm lucide-react 1.72.0](https://www.npmjs.com/package/lucide-react/v/1.72.0), [Lucide repository](https://github.com/lucide-icons/lucide), verified 2026-11-22 | Individual imports through the icon allow-list; ISC licence | verified |
 | Web | IBM Plex Sans / IBM Plex Mono | 5.3.0 fontsource packages | [Fontsource IBM Plex Sans](https://fontsource.org/fonts/ibm-plex-sans), [Fontsource IBM Plex Mono](https://fontsource.org/fonts/ibm-plex-mono), verified 2026-11-22 | Latin WOFF2 assets served from `console/public/fonts`; SIL Open Font Licence 1.1 | verified |
+| Web | Radix UI primitives | 1.2.1 to 2.4.1 individual packages | [Radix Primitives repository](https://github.com/radix-ui/primitives), verified 2026-11-22 | Dialog, AlertDialog, Select, Tabs, Tooltip, Switch, Checkbox and Toast; MIT licence | verified |
+| Web | React Hook Form | 7.92.0 | [npm react-hook-form 7.92.0](https://www.npmjs.com/package/react-hook-form/v/7.92.0), verified 2026-11-22 | Form state and validation integration; MIT licence | verified |
+| Web | Zod | 4.6.7 | [npm zod 4.6.7](https://www.npmjs.com/package/zod/v/4.6.7), verified 2026-11-22 | Zod schemas and form resolution; MIT licence | verified |
+| Web | TanStack Table | 9.3.1 | [npm @tanstack/react-table 9.3.1](https://www.npmjs.com/package/@tanstack/react-table/v/9.3.1), verified 2026-11-22 | Accessible table state; MIT licence | verified |
+| Web | Storybook | 10.6.8 | [npm storybook 10.6.8](https://www.npmjs.com/package/storybook/v/10.6.8), [Storybook repository](https://github.com/storybookjs/storybook), verified 2026-11-22 | Component documentation build; MIT licence | verified |
+| Web | Testing Library user-event | 14.6.13 | [npm user-event 14.6.13](https://www.npmjs.com/package/@testing-library/user-event/v/14.6.13), verified 2026-11-22 | Keyboard and pointer interaction tests; MIT licence | verified |
 
 ## Licences
 

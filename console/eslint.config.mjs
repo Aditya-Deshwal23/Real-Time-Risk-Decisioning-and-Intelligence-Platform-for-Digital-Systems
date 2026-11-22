@@ -46,4 +46,22 @@ export default tseslint.config(
     ...reactHooks.configs.flat.recommended,
     files: ["src/**/*.{ts,tsx}"],
   },
+  {
+    files: ["src/components/ui/**/*.{ts,tsx}"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            "../../app/**",
+            "../../features/**",
+            "../../lib/api/**",
+            "../app/**",
+            "../features/**",
+            "../lib/api/**",
+          ],
+        },
+      ],
+    },
+  },
 );

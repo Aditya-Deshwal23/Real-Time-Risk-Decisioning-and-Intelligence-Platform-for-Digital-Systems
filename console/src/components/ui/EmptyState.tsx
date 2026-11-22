@@ -1,0 +1,17 @@
+import type { ReactNode } from "react";
+
+export type EmptyStateProps = {
+    title: string;
+    description: string;
+    action?: ReactNode;
+};
+
+export function EmptyState({ title, description, action }: EmptyStateProps) {
+    return (
+        <div className="ui-empty-state">
+            <h2>{title}</h2>
+            <p>{description}</p>
+            {action}
+        </div>
+    );
+}
