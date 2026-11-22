@@ -226,6 +226,8 @@
   --control-height-large: 40px;
   --control-target-minimum: 24px;
   --icon-button-target-minimum: 28px;
+  --table-row-height-default: 36px;
+  --table-row-height-compact: 28px;
   --color-button-danger: #d03b3b;
   --color-button-danger-hover: #b83232;
   --color-on-danger: #ffffff;
