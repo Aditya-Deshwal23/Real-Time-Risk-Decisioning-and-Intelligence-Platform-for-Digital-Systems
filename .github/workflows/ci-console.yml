@@ -72,6 +72,12 @@ jobs:
       - run: npm run typecheck
       - run: npm run test
       - run: npm run build
+      - name: Check design tokens
+        run: python3 ../tools/ci/check_tokens.py --root ..
+      - name: Check contrast
+        run: python3 ../tools/ci/check_contrast.py --root ..
+      - name: Check production theme build
+        run: python3 ../tools/ci/check_theme_build.py --dist dist
 
   status:
     name: Console / status
