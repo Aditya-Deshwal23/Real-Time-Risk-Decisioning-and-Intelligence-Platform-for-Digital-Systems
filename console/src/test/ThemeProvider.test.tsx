@@ -9,7 +9,13 @@ function ThemeProbe() {
         <div>
             <output data-testid="choice">{choice}</output>
             <output data-testid="theme">{theme}</output>
-            <button onClick={() => setChoice("light")}>Light</button>
+            <button
+                onClick={() => {
+                    setChoice("light");
+                }}
+            >
+                Light
+            </button>
         </div>
     );
 }
@@ -23,7 +29,9 @@ function installMatchMedia(initialMatches: boolean) {
     vi.stubGlobal(
         "matchMedia",
         vi.fn(() => ({
-            matches: lightQueryMatches,
+            get matches() {
+                return lightQueryMatches;
+            },
             media: "(prefers-color-scheme: light)",
             onchange: null,
             addEventListener: (

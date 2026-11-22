@@ -34,7 +34,7 @@ function readChoice(): ThemeChoice {
 
 function resolveTheme(choice: ThemeChoice): ResolvedTheme {
     if (choice === "system") {
-        return window.matchMedia?.("(prefers-color-scheme: light)").matches
+        return window.matchMedia("(prefers-color-scheme: light)").matches
             ? "light"
             : "dark";
     }
@@ -44,21 +44,20 @@ function resolveTheme(choice: ThemeChoice): ResolvedTheme {
 export function ThemeProvider({ children }: { children: ReactNode }) {
     const [choice, setChoiceState] = useState<ThemeChoice>(readChoice);
     const [systemTheme, setSystemTheme] = useState<ResolvedTheme>(() =>
-        window.matchMedia?.("(prefers-color-scheme: light)").matches
+        window.matchMedia("(prefers-color-scheme: light)").matches
             ? "light"
             : "dark",
     );
 
     useEffect(() => {
-        const media = window.matchMedia?.("(prefers-color-scheme: light)");
-        if (!media) {
-            return;
-        }
+        const media = window.matchMedia("(prefers-color-scheme: light)");
         const handleChange = () => {
             setSystemTheme(media.matches ? "light" : "dark");
         };
         media.addEventListener("change", handleChange);
-        return () => media.removeEventListener("change", handleChange);
+        return () => {
+            media.removeEventListener("change", handleChange);
+        };
     }, []);
 
     const theme = choice === "system" ? systemTheme : resolveTheme(choice);
