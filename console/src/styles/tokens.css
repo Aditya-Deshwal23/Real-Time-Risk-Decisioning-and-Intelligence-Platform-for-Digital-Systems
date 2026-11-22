@@ -164,6 +164,8 @@
   --focus-offset: 2px;
   --shadow-level-2-dark: 0 4px 12px rgb(0 0 0 / 40%);
   --shadow-level-3-dark: 0 16px 40px rgb(0 0 0 / 55%);
+  --shadow-level-2: var(--shadow-level-2-dark);
+  --shadow-level-3: var(--shadow-level-3-dark);
   --scrim-level-3-dark: rgb(0 0 0 / 64%);
   --shadow-level-2-light: 0 4px 12px rgb(15 23 32 / 12%);
   --shadow-level-3-light: 0 16px 40px rgb(15 23 32 / 18%);
@@ -219,6 +221,16 @@
   --icon-size-navigation: 20px;
   --icon-size-empty-state: 24px;
   --icon-stroke-width: 1.75;
+  --control-height-small: 28px;
+  --control-height-medium: 32px;
+  --control-height-large: 40px;
+  --control-target-minimum: 24px;
+  --icon-button-target-minimum: 28px;
+  --color-button-danger: #d03b3b;
+  --color-button-danger-hover: #b83232;
+  --color-on-danger: #ffffff;
+  --shadow-level-2: var(--shadow-level-2-light);
+  --shadow-level-3: var(--shadow-level-3-light);
 }
 
 :root[data-theme="light"] {
@@ -263,6 +275,9 @@
   --color-status-neutral-mark: transparent;
   --color-status-neutral-text: #435061;
   --color-status-neutral-bg: #ebeef2;
+  --color-button-danger: #d03b3b;
+  --color-button-danger-hover: #b83232;
+  --color-on-danger: #ffffff;
 }
 
 @media (prefers-reduced-motion: reduce) {
