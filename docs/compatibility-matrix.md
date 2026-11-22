@@ -1,6 +1,6 @@
 # Compatibility Matrix
 
-**Last reviewed:** 2026-11-21
+**Last reviewed:** 2026-11-22
 
 | Ecosystem | Package or tool | Version | Verification source | Compatibility notes | Status |
 |---|---|---|---|---|---|
