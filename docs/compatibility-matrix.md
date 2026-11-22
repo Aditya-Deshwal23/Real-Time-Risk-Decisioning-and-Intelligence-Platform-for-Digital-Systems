@@ -55,3 +55,12 @@
 | Web | jsdom | 31.0.1 | [npm jsdom 31.0.1](https://www.npmjs.com/package/jsdom/v/31.0.1), verified 2026-11-21 | Test-only environment; Node engine `^22.22.2 || ^24.15.0 || >=26.0.0` | verified |
 | Web | React type declarations | 19.3.0 (`@types/react`), 19.3.0 (`@types/react-dom`) | [npm @types/react 19.3.0](https://www.npmjs.com/package/@types/react/v/19.3.0), [npm @types/react-dom 19.3.0](https://www.npmjs.com/package/@types/react-dom/v/19.3.0), verified 2026-11-21 | Type declarations for the pinned React runtime | verified |
 | Web | Prettier | 3.10.1 | [npm Prettier 3.10.1](https://www.npmjs.com/package/prettier/v/3.10.1), verified 2026-11-21 | Formatting only; lint remains a separate gate | verified |
+| Web | Tailwind CSS / Vite integration | 4.3.5 | [npm tailwindcss 4.3.5](https://www.npmjs.com/package/tailwindcss/v/4.3.5), [npm @tailwindcss/vite 4.3.5](https://www.npmjs.com/package/@tailwindcss/vite/v/4.3.5), verified 2026-11-22 | CSS-variable token source; MIT licence | verified |
+| Web | Lucide | 1.72.0 | [npm lucide-react 1.72.0](https://www.npmjs.com/package/lucide-react/v/1.72.0), [Lucide repository](https://github.com/lucide-icons/lucide), verified 2026-11-22 | Individual imports through the icon allow-list; ISC licence | verified |
+| Web | IBM Plex Sans / IBM Plex Mono | 5.3.0 fontsource packages | [Fontsource IBM Plex Sans](https://fontsource.org/fonts/ibm-plex-sans), [Fontsource IBM Plex Mono](https://fontsource.org/fonts/ibm-plex-mono), verified 2026-11-22 | Latin WOFF2 assets served from `console/public/fonts`; SIL Open Font Licence 1.1 | verified |
+
+## Licences
+
+- IBM Plex Sans 400, 500, 600 Latin WOFF2 - Publisher: IBM / Fontsource - Licence: SIL Open Font Licence 1.1 - Source: [Fontsource package 5.3.0](https://www.npmjs.com/package/@fontsource/ibm-plex-sans/v/5.3.0) - Recorded: 2026-11-22
+- IBM Plex Mono 400, 500 Latin WOFF2 - Publisher: IBM / Fontsource - Licence: SIL Open Font Licence 1.1 - Source: [Fontsource package 5.3.0](https://www.npmjs.com/package/@fontsource/ibm-plex-mono/v/5.3.0) - Recorded: 2026-11-22
+- Lucide icons - Publisher: Lucide Contributors - Licence: ISC - Source: [lucide-react 1.72.0](https://www.npmjs.com/package/lucide-react/v/1.72.0) - Recorded: 2026-11-22
