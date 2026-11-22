@@ -1,0 +1,302 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg-canvas: var(--color-bg-canvas);
+  --color-bg-surface: var(--color-bg-surface);
+  --color-bg-raised: var(--color-bg-raised);
+  --color-bg-sunken: var(--color-bg-sunken);
+  --color-bg-hover: var(--color-bg-hover);
+  --color-bg-selected: var(--color-bg-selected);
+  --color-border-subtle: var(--color-border-subtle);
+  --color-border-default: var(--color-border-default);
+  --color-border-strong: var(--color-border-strong);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-tertiary: var(--color-text-tertiary);
+  --color-text-disabled: var(--color-text-disabled);
+  --color-link: var(--color-link);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-accent-active: var(--color-accent-active);
+  --color-on-accent: var(--color-on-accent);
+  --color-accent-subtle: var(--color-accent-subtle);
+  --color-focus-ring: var(--color-focus-ring);
+  --spacing-0-5: var(--space-0-5);
+  --spacing-1: var(--space-1);
+  --spacing-2: var(--space-2);
+  --spacing-3: var(--space-3);
+  --spacing-4: var(--space-4);
+  --spacing-6: var(--space-6);
+  --spacing-8: var(--space-8);
+  --spacing-12: var(--space-12);
+  --spacing-16: var(--space-16);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+}
+
+:root {
+  color-scheme: dark;
+
+  --raw-black-090c10: #090c10;
+  --raw-black-0c1014: #0c1014;
+  --raw-black-07111f: #07111f;
+  --raw-slate-12171d: #12171d;
+  --raw-slate-1a2028: #1a2028;
+  --raw-slate-1e252e: #1e252e;
+  --raw-slate-232b35: #232b35;
+  --raw-slate-323c49: #323c49;
+  --raw-slate-435061: #435061;
+  --raw-slate-596677: #596677;
+  --raw-slate-5c6776: #5c6776;
+  --raw-slate-6b7684: #6b7684;
+  --raw-slate-8591a1: #8591a1;
+  --raw-slate-aab4c2: #aab4c2;
+  --raw-slate-e6eaf0: #e6eaf0;
+  --raw-blue-12263f: #12263f;
+  --raw-blue-14233a: #14233a;
+  --raw-blue-1a5fd0: #1a5fd0;
+  --raw-blue-1553b8: #1553b8;
+  --raw-blue-104596: #104596;
+  --raw-blue-5aa2ff: #5aa2ff;
+  --raw-blue-78b4ff: #78b4ff;
+  --raw-blue-3f8cf0: #3f8cf0;
+  --raw-blue-6aaeff: #6aaeff;
+  --raw-blue-7db6ff: #7db6ff;
+  --raw-blue-8cbfff: #8cbfff;
+  --raw-blue-10243f: #10243f;
+  --raw-blue-e6eefc: #e6eefc;
+  --raw-blue-e3edfb: #e3edfb;
+  --raw-white: #ffffff;
+  --raw-light-f3f5f7: #f3f5f7;
+  --raw-light-ebeef2: #ebeef2;
+  --raw-light-e3e7ec: #e3e7ec;
+  --raw-light-cbd2da: #cbd2da;
+  --raw-light-7a8695: #7a8695;
+  --raw-light-f0f3f6: #f0f3f6;
+  --raw-light-98a2af: #98a2af;
+  --raw-light-0f1720: #0f1720;
+  --raw-status-approve-mark: #0ca30c;
+  --raw-status-approve-text-dark: #5fd487;
+  --raw-status-approve-bg-dark: #0f2a1a;
+  --raw-status-approve-text-light: #0b6b1f;
+  --raw-status-approve-bg-light: #e3f5e7;
+  --raw-status-review-mark: #fab219;
+  --raw-status-review-text-dark: #f6c65b;
+  --raw-status-review-bg-dark: #2e2410;
+  --raw-status-review-text-light: #7a4b00;
+  --raw-status-review-bg-light: #fff2d1;
+  --raw-status-decline-mark: #d03b3b;
+  --raw-status-decline-text-dark: #ff8f8a;
+  --raw-status-decline-bg-dark: #331519;
+  --raw-status-decline-text-light: #a82525;
+  --raw-status-decline-bg-light: #fde8e8;
+  --raw-status-degraded-mark: #ec835a;
+  --raw-status-degraded-text-dark: #f4a585;
+  --raw-status-degraded-bg-dark: #331c12;
+  --raw-status-degraded-text-light: #9a3f10;
+  --raw-status-degraded-bg-light: #fdebe3;
+  --raw-status-neutral-text-dark: #aab4c2;
+  --raw-status-neutral-bg-dark: #1e252e;
+  --raw-status-neutral-text-light: #435061;
+  --raw-status-neutral-bg-light: #ebeef2;
+
+  --color-bg-canvas: var(--raw-black-0c1014);
+  --color-bg-surface: var(--raw-slate-12171d);
+  --color-bg-raised: var(--raw-slate-1a2028);
+  --color-bg-sunken: var(--raw-black-090c10);
+  --color-bg-hover: var(--raw-slate-1e252e);
+  --color-bg-selected: var(--raw-blue-14233a);
+  --color-border-subtle: var(--raw-slate-232b35);
+  --color-border-default: var(--raw-slate-323c49);
+  --color-border-strong: var(--raw-slate-6b7684);
+  --color-text-primary: var(--raw-slate-e6eaf0);
+  --color-text-secondary: var(--raw-slate-aab4c2);
+  --color-text-tertiary: var(--raw-slate-8591a1);
+  --color-text-disabled: var(--raw-slate-5c6776);
+  --color-link: var(--raw-blue-6aaeff);
+  --color-accent: var(--raw-blue-5aa2ff);
+  --color-accent-hover: var(--raw-blue-78b4ff);
+  --color-accent-active: var(--raw-blue-3f8cf0);
+  --color-on-accent: var(--raw-black-07111f);
+  --color-accent-subtle: var(--raw-blue-12263f);
+  --color-focus-ring: var(--raw-blue-7db6ff);
+
+  --color-status-approve-mark: var(--raw-status-approve-mark);
+  --color-status-approve-text: var(--raw-status-approve-text-dark);
+  --color-status-approve-bg: var(--raw-status-approve-bg-dark);
+  --color-status-review-mark: var(--raw-status-review-mark);
+  --color-status-review-text: var(--raw-status-review-text-dark);
+  --color-status-review-bg: var(--raw-status-review-bg-dark);
+  --color-status-decline-mark: var(--raw-status-decline-mark);
+  --color-status-decline-text: var(--raw-status-decline-text-dark);
+  --color-status-decline-bg: var(--raw-status-decline-bg-dark);
+  --color-status-degraded-mark: var(--raw-status-degraded-mark);
+  --color-status-degraded-text: var(--raw-status-degraded-text-dark);
+  --color-status-degraded-bg: var(--raw-status-degraded-bg-dark);
+  --color-status-info-mark: var(--raw-blue-5aa2ff);
+  --color-status-info-text: var(--raw-blue-8cbfff);
+  --color-status-info-bg: var(--raw-blue-10243f);
+  --color-status-neutral-mark: transparent;
+  --color-status-neutral-text: var(--raw-status-neutral-text-dark);
+  --color-status-neutral-bg: var(--raw-status-neutral-bg-dark);
+
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-full: 9999px;
+
+  --border-width-default: 1px;
+  --border-width-focus: 2px;
+  --focus-offset: 2px;
+  --shadow-level-2-dark: 0 4px 12px rgb(0 0 0 / 40%);
+  --shadow-level-3-dark: 0 16px 40px rgb(0 0 0 / 55%);
+  --scrim-level-3-dark: rgb(0 0 0 / 64%);
+  --shadow-level-2-light: 0 4px 12px rgb(15 23 32 / 12%);
+  --shadow-level-3-light: 0 16px 40px rgb(15 23 32 / 18%);
+  --scrim-level-3-light: rgb(15 23 32 / 40%);
+
+  --z-sticky: 10;
+  --z-top-bar: 40;
+  --z-popover: 50;
+  --z-dialog: 60;
+  --z-toast: 70;
+  --z-tooltip: 80;
+
+  --duration-fast: 100ms;
+  --duration-base: 150ms;
+  --duration-slow: 250ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+
+  --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --font-size-caption: 12px;
+  --line-height-caption: 16px;
+  --font-size-body-sm: 13px;
+  --line-height-body-sm: 20px;
+  --font-size-body: 14px;
+  --line-height-body: 20px;
+  --font-size-label: 13px;
+  --line-height-label: 16px;
+  --font-size-title-sm: 14px;
+  --line-height-title-sm: 20px;
+  --font-size-title-md: 16px;
+  --line-height-title-md: 24px;
+  --font-size-title-lg: 20px;
+  --line-height-title-lg: 28px;
+  --font-size-figure: 24px;
+  --line-height-figure: 28px;
+  --font-size-code: 13px;
+  --line-height-code: 20px;
+  --font-size-code-sm: 12px;
+  --line-height-code-sm: 16px;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --letter-spacing-default: 0;
+  --icon-size-badge: 14px;
+  --icon-size-control: 16px;
+  --icon-size-navigation: 20px;
+  --icon-size-empty-state: 24px;
+  --icon-stroke-width: 1.75;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+
+  --color-bg-canvas: #f3f5f7;
+  --color-bg-surface: #ffffff;
+  --color-bg-raised: #ffffff;
+  --color-bg-sunken: #ebeef2;
+  --color-bg-hover: #f0f3f6;
+  --color-bg-selected: #e3edfb;
+  --color-border-subtle: #e3e7ec;
+  --color-border-default: #cbd2da;
+  --color-border-strong: #7a8695;
+  --color-text-primary: #0f1720;
+  --color-text-secondary: #435061;
+  --color-text-tertiary: #596677;
+  --color-text-disabled: #98a2af;
+  --color-link: #1553b8;
+  --color-accent: #1a5fd0;
+  --color-accent-hover: #1553b8;
+  --color-accent-active: #104596;
+  --color-on-accent: #ffffff;
+  --color-accent-subtle: #e6eefc;
+  --color-focus-ring: #1a5fd0;
+
+  --color-status-approve-mark: #0ca30c;
+  --color-status-approve-text: #0b6b1f;
+  --color-status-approve-bg: #e3f5e7;
+  --color-status-review-mark: #fab219;
+  --color-status-review-text: #7a4b00;
+  --color-status-review-bg: #fff2d1;
+  --color-status-decline-mark: #d03b3b;
+  --color-status-decline-text: #a82525;
+  --color-status-decline-bg: #fde8e8;
+  --color-status-degraded-mark: #ec835a;
+  --color-status-degraded-text: #9a3f10;
+  --color-status-degraded-bg: #fdebe3;
+  --color-status-info-mark: #1a5fd0;
+  --color-status-info-text: #1553b8;
+  --color-status-info-bg: #e6eefc;
+  --color-status-neutral-mark: transparent;
+  --color-status-neutral-text: #435061;
+  --color-status-neutral-bg: #ebeef2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transform: none !important;
+    transition-duration: 100ms !important;
+    animation-duration: 100ms !important;
+  }
+}
+
+@media (forced-colors: active) {
+  :root,
+  :root[data-theme="light"] {
+    --color-bg-canvas: Canvas;
+    --color-bg-surface: Canvas;
+    --color-bg-raised: Canvas;
+    --color-bg-sunken: Canvas;
+    --color-bg-hover: Highlight;
+    --color-bg-selected: Highlight;
+    --color-border-subtle: GrayText;
+    --color-border-default: CanvasText;
+    --color-border-strong: CanvasText;
+    --color-text-primary: CanvasText;
+    --color-text-secondary: CanvasText;
+    --color-text-tertiary: CanvasText;
+    --color-text-disabled: GrayText;
+    --color-link: LinkText;
+    --color-accent: Highlight;
+    --color-accent-hover: Highlight;
+    --color-accent-active: Highlight;
+    --color-on-accent: HighlightText;
+    --color-accent-subtle: Canvas;
+    --color-focus-ring: Highlight;
+  }
+}

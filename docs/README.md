@@ -22,6 +22,8 @@
 | [`.github/workflows/`](../.github/workflows/) | Change-aware CI workflows and aggregate status | Phase 1 — Empty repository to professional monorepo | current |
 | [`claims-ledger.md`](claims-ledger.md) | Evidence-backed public claims | Phase 1 — Empty repository to professional monorepo | draft |
 | [`compatibility-matrix.md`](compatibility-matrix.md) | Registry-verified dependency and tool versions | Phase 1 — Empty repository to professional monorepo | current |
+| [`design-reviews/CP-03.1-change-proposals.md`](design-reviews/CP-03.1-change-proposals.md) | Owner proposals found while implementing CP-03.1 | Phase 3 — Frontend foundations and design system | draft |
+| [`design-reviews/CP-03.1-evidence.md`](design-reviews/CP-03.1-evidence.md) | Commands and acceptance evidence for CP-03.1 | Phase 3 — Frontend foundations and design system | current |
 | [`data-sources.md`](data-sources.md) | Dataset provenance, licence and use restrictions | Phase 9 — Python data engineering and ML pipelines | planned |
 | [`cost-model.md`](cost-model.md) | Infrastructure cost assumptions and evidence | Phase 20 — AWS and Terraform | planned |
 | [`slo.md`](slo.md) | Service-level indicators and hypothesis targets | Phase 18 — Observability and operations | planned |
