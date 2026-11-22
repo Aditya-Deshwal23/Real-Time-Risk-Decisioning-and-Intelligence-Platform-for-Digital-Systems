@@ -47,6 +47,23 @@ Lucide icons come only through `src/components/ui/icons.ts`. `src/components/ui/
 - `tools/ci/check_contrast.py` parses the theme token values and verifies the contrast pairs declared in `ui-context.md`.
 - Theme fixtures, icon accessibility and the separate theme-initialisation script are covered by Vitest tests.
 
+## Primitives
+
+Public primitives are exported only from `src/components/ui/index.ts`. Product code must import from that index, never from an individual primitive file.
+
+Before adding a primitive:
+
+1. Confirm a named consumer exists in the shell or in a Phase 4 or Phase 5 page.
+2. Use Radix primitives for focus traps, roving tabindex, ARIA wiring, portals and complex keyboard behavior.
+3. Use semantic tokens only; run `tools/ci/check_tokens.py` before adding a raw value.
+4. Cover default, hover, focus-visible, active, disabled, loading, error and empty states where applicable in light and dark.
+5. Add a Storybook story with purpose, props, keyboard behavior and do/don't guidance.
+6. Add Vitest and Testing Library interaction tests that query by role and accessible name.
+7. Preserve status text and icons; never use colour alone.
+8. Run `npm run lint`, `npm run typecheck`, `npm run test`, `npm run build` and `npm run storybook:build`.
+
+The documentation build is `npm run storybook:build`. Story files live beside the primitive implementation under `src/components/ui/`.
+
 ## Platform connection in development
 
 The planned development arrangement is a same-origin Vite proxy for `/console/v1` to the platform's local origin. The platform architecture also permits direct local CORS from `http://localhost:5173` with credentials and the CSRF header; it forbids wildcard origins with credentials. Neither the proxy nor CORS is configured in this skeleton; Phase 4 implements the selected arrangement.

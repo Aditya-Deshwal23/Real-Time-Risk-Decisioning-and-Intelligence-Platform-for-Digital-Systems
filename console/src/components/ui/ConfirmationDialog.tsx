@@ -12,6 +12,7 @@ export type ConfirmationDialogProps = {
     onConfirm: () => void;
     confirmDisabled?: boolean;
     children?: ReactNode;
+    trigger?: ReactNode;
 };
 
 export function ConfirmationDialog({
@@ -24,9 +25,15 @@ export function ConfirmationDialog({
     onConfirm,
     confirmDisabled,
     children,
+    trigger,
 }: ConfirmationDialogProps) {
     return (
         <AlertDialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+            {trigger ? (
+                <AlertDialogPrimitive.Trigger asChild>
+                    {trigger}
+                </AlertDialogPrimitive.Trigger>
+            ) : null}
             <AlertDialogPrimitive.Portal>
                 <AlertDialogPrimitive.Overlay className="ui-dialog-overlay" />
                 <AlertDialogPrimitive.Content className="ui-dialog ui-dialog-400">

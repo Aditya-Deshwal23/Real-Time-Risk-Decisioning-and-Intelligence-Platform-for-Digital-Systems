@@ -11,6 +11,7 @@ export type DialogProps = {
     children: ReactNode;
     footer?: ReactNode;
     width?: "400" | "560" | "720";
+    trigger?: ReactNode;
 };
 
 export function Dialog({
@@ -21,9 +22,15 @@ export function Dialog({
     children,
     footer,
     width = "560",
+    trigger,
 }: DialogProps) {
     return (
         <DialogPrimitive.Root open={open} onOpenChange={onOpenChange}>
+            {trigger ? (
+                <DialogPrimitive.Trigger asChild>
+                    {trigger}
+                </DialogPrimitive.Trigger>
+            ) : null}
             <DialogPrimitive.Portal>
                 <DialogPrimitive.Overlay className="ui-dialog-overlay" />
                 <DialogPrimitive.Content

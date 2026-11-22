@@ -45,6 +45,7 @@ node_modules/
 .turbo/
 **/dist/
 **/coverage/
+**/storybook-static/
 npm-debug.log*
 yarn-debug.log*
 pnpm-debug.log*
